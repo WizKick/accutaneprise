@@ -10,19 +10,22 @@
 <style>
 :root{
   --paper:#F5F6F7; --card:#FFFFFF; --ink:#1C2126; --muted:#5F6973; --line:#D9DDE1;
-  --foil:#E3E6E9; --foil-edge:#C9CED3; --capsule:#7A2232; --capsule-hi:#A3384B; --ok:#2E7D5B; --warn:#9A6A12;
+  --foil:#E3E6E9; --foil-edge:#C9CED3; --capsule:#7A2232; --capsule-hi:#A3384B;
+  --ok:#2E7D5B; --ok-bg:#E3F2EA; --miss:#D32F2F; --miss-bg:#FDECEC; --warn:#9A6A12;
   --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --body:"Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#15181B; --card:#1E2226; --ink:#ECEFF1; --muted:#9AA4AD; --line:#30363C;
-    --foil:#2A3035; --foil-edge:#3A4148; --capsule:#C24A5E; --capsule-hi:#E0687B; --ok:#4FB386; --warn:#D9A441;
+    --foil:#2A3035; --foil-edge:#3A4148; --capsule:#C24A5E; --capsule-hi:#E0687B;
+    --ok:#4FB386; --ok-bg:#183428; --miss:#FF6B6B; --miss-bg:#3A1C1E; --warn:#D9A441;
   }
 }
 :root[data-theme="dark"]{
   --paper:#15181B; --card:#1E2226; --ink:#ECEFF1; --muted:#9AA4AD; --line:#30363C;
-  --foil:#2A3035; --foil-edge:#3A4148; --capsule:#C24A5E; --capsule-hi:#E0687B; --ok:#4FB386; --warn:#D9A441;
+  --foil:#2A3035; --foil-edge:#3A4148; --capsule:#C24A5E; --capsule-hi:#E0687B;
+  --ok:#4FB386; --ok-bg:#183428; --miss:#FF6B6B; --miss-bg:#3A1C1E; --warn:#D9A441;
 }
 *{box-sizing:border-box}
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -35,6 +38,7 @@ h2{font-size:1.2rem;margin-bottom:12px}
 section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:18px}
 .muted{color:var(--muted)}
 .small{font-size:.875rem}
+.red{color:var(--miss)}
 
 /* hero */
 .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center;margin-top:14px}
@@ -46,13 +50,34 @@ section{background:var(--card);border:1px solid var(--line);border-radius:14px;p
 .blister{background:var(--foil);border:1px solid var(--foil-edge);border-radius:16px;padding:12px;display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
 .cell{aspect-ratio:1/1.45;border-radius:999px;background:var(--paper);border:1px solid var(--foil-edge);position:relative;overflow:hidden}
 .cell i{position:absolute;inset:auto 0 0 0;background:linear-gradient(180deg,var(--capsule-hi),var(--capsule));height:0}
-.cell.full i{height:100%}
 .legend{margin-top:8px;text-align:center}
+
+/* end estimate */
+.eta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.eta div{border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.eta b{display:block;font-family:var(--display);font-size:1.6rem;line-height:1.15}
+.eta .date{font-weight:600;margin-top:2px}
+.eta .how{color:var(--muted);font-size:.85rem;margin-top:6px}
+.eta .real{border-color:var(--miss);background:var(--miss-bg)}
 
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px 20px}
 .stat b{display:block;font-family:var(--display);font-size:1.35rem;font-weight:700}
 .stat span{color:var(--muted);font-size:.875rem}
+.stat.bad b{color:var(--miss)}
+
+/* calendar */
+.months{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.month h3{font:600 .95rem var(--body);margin:0 0 6px;text-transform:capitalize}
+.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.grid7 .wd{font-size:.7rem;color:var(--muted);text-align:center}
+.dcell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--muted);background:var(--paper)}
+.dcell.taken{background:var(--ok);color:#fff;font-weight:600}
+.dcell.missed{background:var(--miss);color:#fff;font-weight:600}
+.dcell.today{outline:2px solid var(--ink);outline-offset:-2px}
+.dcell.pending{background:var(--paper);color:var(--ink);font-weight:600}
+.keys{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:.85rem;color:var(--muted)}
+.keys span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--k)}
 
 /* forms */
 form,.row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
@@ -65,6 +90,8 @@ button.primary{background:var(--capsule);border-color:var(--capsule);color:#fff}
 button.ghost{background:none;border:none;color:var(--muted);padding:6px 8px}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
 .chips button{padding:6px 12px;font-weight:500}
+.hidden-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.msg{margin-top:10px;font-size:.9rem}
 
 /* history */
 .day{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
@@ -73,6 +100,8 @@ button.ghost{background:none;border:none;color:var(--muted);padding:6px 8px}
 .day ul{list-style:none;margin:4px 0 0;padding:0}
 .day li{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:.9rem}
 .day .sum{font-family:var(--display);font-weight:700;white-space:nowrap}
+.day.missed{background:var(--miss-bg);border-radius:8px;padding:8px 10px;border-top-color:transparent;margin:2px 0}
+.day.missed .d,.day.missed .sum{color:var(--miss)}
 .empty{color:var(--muted);padding:8px 0}
 details summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:1.2rem}
 details[open] summary{margin-bottom:12px}
@@ -90,7 +119,7 @@ details[open] summary{margin-bottom:12px}
   <div class="hero">
     <div>
       <div class="total" id="total">0<small>mg</small></div>
-      <div class="of" id="of">sur un objectif de — mg</div>
+      <div class="of" id="of"></div>
       <div class="pct" id="pct">0 %</div>
       <div class="muted small" id="remain"></div>
     </div>
@@ -105,15 +134,41 @@ details[open] summary{margin-bottom:12px}
     <form id="addForm">
       <label>Date<input type="date" id="fDate" required></label>
       <label>Dose (mg)<input type="number" id="fMg" min="1" step="any" inputmode="decimal" required></label>
-      <label style="flex-basis:100%">Note (facultatif)<input type="text" id="fNote" maxlength="120" placeholder="ex. pris avec le repas"></label>
+      <label style="flex-basis:100%">Note (facultatif)<input type="text" id="fNote" maxlength="120" placeholder="ex. prise à 22h avec le dîner"></label>
       <button class="primary" type="submit">Ajouter la prise</button>
     </form>
     <div class="chips" id="chips"></div>
   </section>
 
   <section>
+    <h2>Fin du traitement</h2>
+    <div class="eta" id="eta"></div>
+  </section>
+
+  <section>
     <h2>Où tu en es</h2>
     <div class="stats" id="stats"></div>
+  </section>
+
+  <section>
+    <h2>Calendrier</h2>
+    <div class="months" id="calendar"></div>
+    <div class="keys">
+      <span style="--k:var(--ok)">Prise</span>
+      <span style="--k:var(--miss)">Oubli</span>
+      <span style="--k:var(--paper);">Aujourd'hui (encadré)</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sauvegarde</h2>
+    <p class="muted small">La sauvegarde contient tout : prises, notes, poids et objectif. Garde-la au chaud et réimporte-la sur un autre appareil ou navigateur.</p>
+    <div class="row">
+      <button type="button" class="primary" id="saveBtn">Télécharger la sauvegarde</button>
+      <button type="button" id="loadBtn">Importer une sauvegarde</button>
+      <input type="file" id="loadFile" class="hidden-input" accept=".json,application/json" tabindex="-1" aria-hidden="true">
+    </div>
+    <div class="msg" id="saveMsg" role="status"></div>
   </section>
 
   <section>
@@ -140,12 +195,12 @@ details[open] summary{margin-bottom:12px}
 
   <section>
     <details id="importBox">
-      <summary>Importer depuis ton fichier texte</summary>
-      <p class="muted small">Choisis ton ACCUTANE.txt (ou un CSV exporté depuis ce site) ou colle son contenu. Chaque ligne avec une date et une dose en mg devient une prise (formats acceptés : 12/09/2026, 12/09, 2026-09-12, 12 septembre…). Les lignes « OUBLIE », les totaux et les résultats d'analyse sont ignorés, et les doublons ne sont pas réimportés.</p>
+      <summary>Importer depuis un fichier texte</summary>
+      <p class="muted small">Choisis ton ACCUTANE.txt ou colle son contenu. Une prise = une ligne qui commence par une date et contient une dose en mg (ex. « 12/09/2026 = 30MG … »). Les lignes « OUBLIE », les totaux et les analyses sont ignorés, et les doublons ne sont pas réimportés.</p>
       <div class="row">
         <label>Fichier .txt<input type="file" id="iFile" accept=".txt,.csv,text/plain,text/csv"></label>
       </div>
-      <label style="margin-top:10px">Ou colle le texte<textarea id="iText" placeholder="12/09/2026 40mg&#10;13/09/2026 40mg"></textarea></label>
+      <label style="margin-top:10px">Ou colle le texte<textarea id="iText" placeholder="12/09/2026 = 30MG PRISE A 22H00"></textarea></label>
       <div class="row" style="margin-top:10px">
         <button type="button" id="iParse">Analyser</button>
         <button type="button" class="primary" id="iDo" hidden>Importer</button>
@@ -155,9 +210,7 @@ details[open] summary{margin-bottom:12px}
   </section>
 
   <section>
-    <h2>Sauvegarde</h2>
     <div class="row">
-      <button type="button" id="exportBtn">Télécharger en CSV</button>
       <button type="button" class="ghost" id="wipeBtn">Tout effacer</button>
     </div>
   </section>
@@ -169,23 +222,32 @@ details[open] summary{margin-bottom:12px}
 (function(){
   const $ = id => document.getElementById(id);
   const STORE_KEY = 'accutane-tracker-v1';
+  const SAVE_APP = 'accutane-tracker';
   let state = { weightKg: 74, targetPerKg: 150, entries: [] };
-  let backend = null; // {save(state)}
+  let backend = null;
   let saveTimer = null;
 
   // ---------- utils ----------
   const fmt = (n, d=0) => Number(n).toLocaleString('fr-FR',{maximumFractionDigits:d, minimumFractionDigits:0});
-  const todayISO = () => { const d=new Date(); return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10); };
+  const toISO = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const todayISO = () => toISO(new Date());
   const parseISO = s => { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); };
   const dayDiff = (a,b) => Math.round((parseISO(b)-parseISO(a))/86400000);
   const addDays = (s,n) => { const d=parseISO(s); d.setDate(d.getDate()+n); return d; };
   const longDate = s => parseISO(s).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
+  const shortDate = d => d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
   const uid = () => Math.random().toString(36).slice(2,10)+Date.now().toString(36);
+  function duration(days){
+    if (days <= 0) return 'Terminé';
+    const months = Math.floor(days / 30.44);
+    const rest = Math.round(days - months*30.44);
+    if (months === 0) return days + ' jours';
+    return months + ' mois' + (rest ? ' et ' + rest + ' j' : '');
+  }
 
   // ---------- persistence ----------
   function localLoad(){ try{ const r=localStorage.getItem(STORE_KEY); return r?JSON.parse(r):null; }catch(e){ return null; } }
   function localSave(s){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(s)); }catch(e){} }
-
   function setStatus(t){ $('status').textContent = t; }
 
   function queueSave(){
@@ -193,10 +255,10 @@ details[open] summary{margin-bottom:12px}
     saveTimer = setTimeout(async () => {
       localSave(state);
       if (backend){
-        try{ await backend.save(state); setStatus('Enregistré sur ton compte'); }
-        catch(e){ setStatus('Enregistré sur cet appareil uniquement'); }
-      }
-    }, 400);
+        try{ await backend.save(state); setStatus('Synchronisé avec ton compte'); }
+        catch(e){ setStatus('Enregistré dans ce navigateur'); }
+      } else setStatus('Enregistré dans ce navigateur');
+    }, 300);
   }
 
   function sanitize(s){
@@ -206,7 +268,8 @@ details[open] summary{margin-bottom:12px}
       if (Number(s.targetPerKg) > 0) out.targetPerKg = Number(s.targetPerKg);
       if (Array.isArray(s.entries)) out.entries = s.entries
         .filter(e => e && /^\d{4}-\d{2}-\d{2}$/.test(e.date) && Number(e.mg) > 0)
-        .map(e => ({ id: String(e.id||uid()), date: e.date, mg: Number(e.mg), note: String(e.note||'').slice(0,120) }));
+        .map(e => ({ id: String(e.id||uid()), date: e.date, mg: Number(e.mg), note: String(e.note||'').slice(0,120) }))
+        .sort((a,b)=>a.date.localeCompare(b.date));
     }
     return out;
   }
@@ -214,49 +277,67 @@ details[open] summary{margin-bottom:12px}
   async function initBackend(){
     const local = localLoad();
     if (local){ state = sanitize(local); render(); }
-    if (!window.claude || !window.claude.use){ setStatus('Enregistré sur cet appareil'); return; }
+    setStatus('Enregistré dans ce navigateur');
+    if (!window.claude || !window.claude.use) return;
     try{
       const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
-      if (!db || !user){ setStatus('Enregistré sur cet appareil'); return; }
+      if (!db || !user) return;
       const id = await user.id();
-      if (!id){ setStatus('Enregistré sur cet appareil'); return; }
+      if (!id) return;
       const ref = db.doc('data/users/' + id + '/accutane');
       const snap = await ref.get();
-      if (snap.exists){
-        state = sanitize(snap.data());
-        localSave(state);
-      } else if (state.entries.length){
-        await ref.set(JSON.parse(JSON.stringify(state)));
-      }
+      if (snap.exists){ state = sanitize(snap.data()); localSave(state); }
+      else if (state.entries.length){ await ref.set(JSON.parse(JSON.stringify(state))); }
       backend = { save: s => ref.set(JSON.parse(JSON.stringify(s))) };
       setStatus('Synchronisé avec ton compte');
       render();
-    }catch(e){
-      setStatus('Enregistré sur cet appareil');
-    }
+    }catch(e){}
   }
 
   // ---------- calculations ----------
   function compute(){
+    const today = todayISO();
     const total = state.entries.reduce((a,e)=>a+e.mg,0);
     const target = state.weightKg * state.targetPerKg;
     const pct = target ? total/target*100 : 0;
-    const dates = [...new Set(state.entries.map(e=>e.date))].sort();
+    const takenSet = new Set(state.entries.map(e=>e.date));
+    const dates = [...takenSet].sort();
     const first = dates[0], last = dates[dates.length-1];
-    const span = first ? dayDiff(first,last)+1 : 0;
-    const avg = span ? total/span : 0;
     const remaining = Math.max(0, target-total);
-    // Estimation basée sur la dose actuelle (dose du dernier jour de prise), prise chaque jour sans oubli
+
+    // Jours oubliés : du début jusqu'à hier (aujourd'hui n'est pas encore un oubli)
+    const missed = [];
+    let elapsed = 0;
+    if (first){
+      const end = takenSet.has(today) ? today : toISO(addDays(today,-1));
+      const n = dayDiff(first, end);
+      for (let i=0;i<=n;i++){
+        const d = toISO(addDays(first,i));
+        elapsed++;
+        if (!takenSet.has(d)) missed.push(d);
+      }
+    }
+    const takenDays = dates.length;
+    const adherence = elapsed ? takenDays/elapsed : 1;
+
     const currentDose = last ? state.entries.filter(e=>e.date===last).reduce((a,e)=>a+e.mg,0) : 0;
-    const daysLeft = currentDose>0 ? Math.ceil(remaining/currentDose) : null;
-    const today = todayISO();
-    const startFrom = (last && last < today) ? today : last; // si pause en cours, on compte à partir d'aujourd'hui
-    const endDate = (daysLeft!==null && startFrom) ? addDays(startFrom, last < today ? daysLeft - 1 : daysLeft) : null;
-    const sinceLast = last ? dayDiff(last, today) : null;
-    // last 7 days average from last entry
-    let recent = 0;
-    if (last){ const from = addDays(last,-6); recent = state.entries.filter(e=>parseISO(e.date)>=from).reduce((a,e)=>a+e.mg,0)/Math.min(7,span); }
-    return { total, target, pct, dates, first, last, span, avg, remaining, daysLeft, endDate, recent, currentDose, sinceLast };
+    const prisesLeft = currentDose>0 ? Math.ceil(remaining/currentDose) : null;
+    const tookToday = takenSet.has(today);
+    // Sans oubli : prochaine prise aujourd'hui si pas encore prise, sinon demain
+    const startOffset = tookToday ? 1 : 0;
+    const idealDays = prisesLeft!==null ? (prisesLeft ? prisesLeft - 1 + startOffset : 0) : null;
+    const idealEnd = idealDays!==null ? addDays(today, idealDays) : null;
+    // À ton rythme réel : même nombre de prises, étalées selon ton taux de prise
+    const realDays = (prisesLeft!==null && adherence>0) ? (prisesLeft ? Math.ceil((prisesLeft - 1 + startOffset) / adherence) : 0) : null;
+    const realEnd = realDays!==null ? addDays(today, realDays) : null;
+
+    let streakOff = 0;
+    if (last && !tookToday) streakOff = dayDiff(last, today) - 1;
+
+    const totalSpan = first ? dayDiff(first, today) + 1 : 0;
+    const avg = elapsed ? total/elapsed : 0;
+    return { today, total, target, pct, takenSet, dates, first, last, remaining, missed, elapsed, takenDays, adherence,
+             currentDose, prisesLeft, idealDays, idealEnd, realDays, realEnd, tookToday, streakOff, avg, totalSpan };
   }
 
   // ---------- render ----------
@@ -265,37 +346,80 @@ details[open] summary{margin-bottom:12px}
     for(let i=0;i<100;i++){ const c=document.createElement('div'); c.className='cell'; c.appendChild(document.createElement('i')); b.appendChild(c); }
   }
 
+  function renderCalendar(c){
+    const cal = $('calendar'); cal.innerHTML='';
+    if (!c.first){ cal.innerHTML = '<div class="empty">Le calendrier apparaîtra après ta première prise.</div>'; return; }
+    const missedSet = new Set(c.missed);
+    const start = parseISO(c.first); start.setDate(1);
+    const endM = parseISO(c.today); endM.setDate(1);
+    const wds = ['L','M','M','J','V','S','D'];
+    for (let m = new Date(start); m <= endM; m.setMonth(m.getMonth()+1)){
+      const box = document.createElement('div'); box.className='month';
+      const h = document.createElement('h3'); h.textContent = m.toLocaleDateString('fr-FR',{month:'long',year:'numeric'}); box.appendChild(h);
+      const g = document.createElement('div'); g.className='grid7';
+      wds.forEach(w=>{ const x=document.createElement('div'); x.className='wd'; x.textContent=w; g.appendChild(x); });
+      const offset = (m.getDay()+6)%7;
+      for (let i=0;i<offset;i++) g.appendChild(document.createElement('div'));
+      const dim = new Date(m.getFullYear(), m.getMonth()+1, 0).getDate();
+      for (let d=1; d<=dim; d++){
+        const iso = toISO(new Date(m.getFullYear(), m.getMonth(), d));
+        const cell = document.createElement('div'); cell.className='dcell'; cell.textContent=d;
+        let label = '';
+        if (c.takenSet.has(iso)){ cell.classList.add('taken'); label='prise'; }
+        else if (missedSet.has(iso)){ cell.classList.add('missed'); label='oubli'; }
+        else if (iso === c.today){ cell.classList.add('pending'); label='à prendre'; }
+        if (iso === c.today) cell.classList.add('today');
+        cell.title = parseISO(iso).toLocaleDateString('fr-FR') + (label ? ' : '+label : '');
+        g.appendChild(cell);
+      }
+      box.appendChild(g); cal.appendChild(box);
+    }
+  }
+
   function render(){
     const c = compute();
     $('total').innerHTML = fmt(c.total) + '<small>mg</small>';
     $('of').textContent = 'sur un objectif de ' + fmt(c.target) + ' mg (' + fmt(state.weightKg,1) + ' kg × ' + fmt(state.targetPerKg) + ' mg/kg)';
     $('pct').textContent = fmt(Math.min(c.pct,999),1) + ' %';
-    $('remain').textContent = c.total >= c.target && c.target
-      ? 'Objectif atteint.'
-      : 'Reste ' + fmt(c.remaining) + ' mg';
+    $('remain').textContent = (c.total >= c.target && c.target) ? 'Objectif atteint.' : 'Reste ' + fmt(c.remaining) + ' mg';
 
     const cells = $('blister').children;
     for (let i=0;i<cells.length;i++){
       const fill = Math.max(0, Math.min(1, c.pct - i));
-      cells[i].classList.toggle('full', fill>=1);
       cells[i].firstChild.style.height = (fill*100) + '%';
     }
 
+    // ETA
+    const eta = $('eta');
+    if (!c.first){
+      eta.innerHTML = '<p class="muted">Ajoute une prise ou importe ta sauvegarde pour voir la date de fin estimée.</p>';
+    } else if (c.remaining <= 0){
+      eta.innerHTML = '<div><b>Objectif atteint</b><div class="how">Vois avec ton dermatologue pour la suite.</div></div>';
+    } else {
+      eta.innerHTML =
+        '<div><b>' + duration(c.idealDays+1) + '</b>' +
+        '<div class="date">Fin le ' + shortDate(c.idealEnd) + '</div>' +
+        '<div class="how">Sans oubli : encore ' + fmt(c.prisesLeft) + ' prises de ' + fmt(c.currentDose,1) + ' mg</div></div>' +
+        '<div class="real"><b>' + duration(c.realDays+1) + '</b>' +
+        '<div class="date">Fin le ' + shortDate(c.realEnd) + '</div>' +
+        '<div class="how">À ton rythme actuel : tu prends ta dose ' + fmt(c.adherence*100) + ' % des jours</div></div>';
+    }
+
+    // Stats
     const perKg = state.weightKg ? c.total/state.weightKg : 0;
     const stats = [
-      [fmt(perKg,1)+' mg/kg', 'cumulés à ce jour'],
-      [c.span ? fmt(c.span)+' j' : '—', c.first ? 'depuis le '+parseISO(c.first).toLocaleDateString('fr-FR') : 'aucune prise'],
-      [c.span ? fmt(c.dates.length)+' / '+fmt(c.span) : '—', c.span ? 'jours avec prise ('+fmt(c.span-c.dates.length)+' oubliés)' : 'jours avec prise'],
-      [c.avg ? fmt(c.avg,1)+' mg/j' : '—', 'moyenne sur la cure'],
-      [c.avg ? fmt(c.avg/state.weightKg,2)+' mg/kg/j' : '—', 'moyenne rapportée au poids'],
-      [c.recent ? fmt(c.recent,1)+' mg/j' : '—', 'moyenne des 7 derniers jours'],
-      [c.currentDose ? fmt(c.currentDose,1)+' mg/j' : '—', 'dose actuelle'],
-      [c.endDate ? c.endDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'}) : '—', c.daysLeft!==null ? (c.daysLeft ? 'fin estimée : encore '+fmt(c.daysLeft)+' prises de '+fmt(c.currentDose,1)+' mg sans oubli' : 'objectif atteint') : 'fin estimée'],
-      [c.sinceLast===null ? '—' : (c.sinceLast<=1 ? 'À jour' : fmt(c.sinceLast)+' j'), c.sinceLast===null ? 'dernière prise' : (c.sinceLast<=1 ? 'dernière prise le '+parseISO(c.last).toLocaleDateString('fr-FR') : 'sans prise depuis le '+parseISO(c.last).toLocaleDateString('fr-FR'))],
+      ['', fmt(perKg,1)+' mg/kg', 'cumulés à ce jour'],
+      ['', c.currentDose ? fmt(c.currentDose,1)+' mg/j' : '—', 'dose actuelle'],
+      ['', c.first ? fmt(c.takenDays)+' / '+fmt(c.elapsed) : '—', c.first ? 'jours avec prise depuis le '+parseISO(c.first).toLocaleDateString('fr-FR') : 'jours avec prise'],
+      [c.missed.length ? 'bad' : '', fmt(c.missed.length), 'oublis depuis le début'],
+      [c.streakOff>0 ? 'bad' : '', !c.last ? '—' : (c.tookToday ? 'Prise faite' : (c.streakOff>0 ? fmt(c.streakOff)+' j' : 'À prendre')), !c.last ? 'aujourd\'hui' : (c.tookToday ? 'aujourd\'hui' : (c.streakOff>0 ? 'sans prise d\'affilée' : 'aujourd\'hui'))],
+      ['', c.avg ? fmt(c.avg,1)+' mg/j' : '—', 'moyenne réelle, oublis compris'],
     ];
-    $('stats').innerHTML = stats.map(([v,l])=>'<div class="stat"><b>'+v+'</b><span>'+l+'</span></div>').join('');
+    $('stats').innerHTML = stats.map(([cls,v,l])=>'<div class="stat '+cls+'"><b>'+v+'</b><span>'+l+'</span></div>').join('');
 
-    // settings
+    renderCalendar(c);
+
+    // Réglages
     $('sWeight').value = state.weightKg;
     const preset = ['120','135','150'].includes(String(state.targetPerKg));
     $('sTarget').value = preset ? String(state.targetPerKg) : 'custom';
@@ -304,38 +428,44 @@ details[open] summary{margin-bottom:12px}
     $('targetExplain').textContent =
       'À ' + fmt(state.weightKg,1) + ' kg : 120 mg/kg = ' + fmt(state.weightKg*120) + ' mg · 135 mg/kg = ' + fmt(state.weightKg*135) + ' mg · 150 mg/kg = ' + fmt(state.weightKg*150) + ' mg. La taille n\'entre pas dans le calcul, seul le poids compte.';
 
-    // quick dose chips: last used doses
-    const used = [...new Set(state.entries.slice().reverse().map(e=>e.mg))].slice(0,4);
+    // Boutons rapides
+    const used = [...new Set(state.entries.slice().reverse().map(e=>e.mg))].slice(0,3);
     const chipVals = used.length ? used : [20,30,40];
     $('chips').innerHTML = chipVals.map(v=>'<button type="button" data-mg="'+v+'">'+fmt(v,1)+' mg aujourd\'hui</button>').join('');
 
-    // history
+    // Historique (oublis en rouge)
+    const h = $('history'); h.innerHTML='';
+    if (!c.first){
+      h.innerHTML = '<div class="empty">Aucune prise pour l\'instant. Importe ta sauvegarde ou ajoute ta première dose.</div>';
+      return;
+    }
     const byDay = {};
     state.entries.forEach(e => (byDay[e.date] ||= []).push(e));
-    const days = Object.keys(byDay).sort().reverse();
-    if (!days.length){
-      $('history').innerHTML = '<div class="empty">Aucune prise pour l\'instant. Ajoute ta première dose ci-dessus ou importe ton fichier texte.</div>';
-    } else {
-      const h = $('history'); h.innerHTML='';
-      days.forEach(d => {
-        const sum = byDay[d].reduce((a,e)=>a+e.mg,0);
-        const row = document.createElement('div'); row.className='day';
-        const left = document.createElement('div');
-        const dl = document.createElement('div'); dl.className='d'; dl.textContent = longDate(d); left.appendChild(dl);
+    const allDays = [...new Set([...Object.keys(byDay), ...c.missed])].sort().reverse();
+    allDays.forEach(d => {
+      const row = document.createElement('div');
+      const left = document.createElement('div');
+      const dl = document.createElement('div'); dl.className='d'; dl.textContent = longDate(d); left.appendChild(dl);
+      const s = document.createElement('div'); s.className='sum';
+      if (!byDay[d]){
+        row.className = 'day missed';
+        s.textContent = 'Oubli';
+      } else {
+        row.className = 'day';
         const ul = document.createElement('ul');
         byDay[d].forEach(e => {
           const li = document.createElement('li');
           const t = document.createElement('span'); t.textContent = fmt(e.mg,1)+' mg' + (e.note ? ' · '+e.note : '');
           const del = document.createElement('button'); del.className='ghost'; del.type='button'; del.textContent='Supprimer';
           del.setAttribute('aria-label','Supprimer la prise de '+fmt(e.mg,1)+' mg du '+longDate(d));
-          del.onclick = () => { state.entries = state.entries.filter(x=>x.id!==e.id); render(); queueSave(); };
+          del.onclick = () => { if (confirm('Supprimer cette prise ?')){ state.entries = state.entries.filter(x=>x.id!==e.id); render(); queueSave(); } };
           li.append(t, del); ul.appendChild(li);
         });
         left.appendChild(ul);
-        const s = document.createElement('div'); s.className='sum'; s.textContent = fmt(sum,1)+' mg';
-        row.append(left, s); h.appendChild(row);
-      });
-    }
+        s.textContent = fmt(byDay[d].reduce((a,e)=>a+e.mg,0),1)+' mg';
+      }
+      row.append(left, s); h.appendChild(row);
+    });
   }
 
   // ---------- actions ----------
@@ -344,7 +474,6 @@ details[open] summary{margin-bottom:12px}
     state.entries.sort((a,b)=>a.date.localeCompare(b.date));
     render(); queueSave();
   }
-
   $('addForm').addEventListener('submit', ev => {
     ev.preventDefault();
     const mg = parseFloat(String($('fMg').value).replace(',','.'));
@@ -356,67 +485,74 @@ details[open] summary{margin-bottom:12px}
     const b = ev.target.closest('button[data-mg]'); if (!b) return;
     addEntry(todayISO(), Number(b.dataset.mg), '');
   });
-  $('sWeight').addEventListener('change', () => {
-    const w = parseFloat($('sWeight').value); if (w>0){ state.weightKg = w; render(); queueSave(); }
-  });
+  $('sWeight').addEventListener('change', () => { const w = parseFloat($('sWeight').value); if (w>0){ state.weightKg = w; render(); queueSave(); } });
   $('sTarget').addEventListener('change', () => {
     const v = $('sTarget').value;
     if (v==='custom'){ $('customWrap').hidden=false; $('sCustom').focus(); return; }
     state.targetPerKg = Number(v); render(); queueSave();
   });
-  $('sCustom').addEventListener('change', () => {
-    const v = parseFloat($('sCustom').value); if (v>0){ state.targetPerKg = v; render(); queueSave(); }
+  $('sCustom').addEventListener('change', () => { const v = parseFloat($('sCustom').value); if (v>0){ state.targetPerKg = v; render(); queueSave(); } });
+
+  // ---------- sauvegarde / import de sauvegarde ----------
+  let downloads = null;
+  async function downloadFile(filename, text, mime){
+    if (downloads){
+      try{ await downloads.save({ filename, data: text }); return true; }catch(e){ return false; }
+    }
+    const blob = new Blob([text], { type: mime });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    return true;
+  }
+  $('saveBtn').addEventListener('click', async () => {
+    const payload = { app: SAVE_APP, version: 1, exportedAt: new Date().toISOString(),
+      weightKg: state.weightKg, targetPerKg: state.targetPerKg, entries: state.entries };
+    const ok = await downloadFile('accutane-sauvegarde-' + todayISO() + '.json', JSON.stringify(payload, null, 2), 'application/json');
+    $('saveMsg').textContent = ok ? 'Sauvegarde téléchargée (' + state.entries.length + ' prises).' : 'Téléchargement annulé.';
+  });
+  $('loadBtn').addEventListener('click', () => $('loadFile').click());
+  $('loadFile').addEventListener('change', () => {
+    const f = $('loadFile').files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      let data;
+      try{ data = JSON.parse(r.result); }catch(e){ $('saveMsg').textContent = 'Ce fichier n\'est pas une sauvegarde valide (JSON illisible).'; return; }
+      if (!data || !Array.isArray(data.entries)){ $('saveMsg').textContent = 'Ce fichier n\'est pas une sauvegarde de ce site.'; return; }
+      const next = sanitize(data);
+      const msg = 'Remplacer tes données actuelles (' + state.entries.length + ' prises) par la sauvegarde (' + next.entries.length + ' prises, ' + fmt(next.entries.reduce((a,e)=>a+e.mg,0)) + ' mg) ?';
+      if (state.entries.length && !confirm(msg)) { $('saveMsg').textContent = 'Import annulé.'; return; }
+      state = next; render(); queueSave();
+      $('saveMsg').textContent = 'Sauvegarde importée : ' + next.entries.length + ' prises.';
+    };
+    r.readAsText(f, 'utf-8');
+    $('loadFile').value = '';
   });
 
-  // ---------- import ----------
+  // ---------- import texte ----------
   const MONTHS = {janv:1,jan:1,fevr:2,fev:2,feb:2,mars:3,mar:3,avr:4,apr:4,mai:5,may:5,juin:6,jun:6,juil:7,jul:7,aout:8,aug:8,sept:9,sep:9,oct:10,nov:11,dec:12};
   const strip = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-  function guessYear(m,d){
-    const now = new Date(); let y = now.getFullYear();
-    if (new Date(y,m-1,d) > new Date(now.getTime()+86400000)) y--;
-    return y;
-  }
+  function guessYear(m,d){ const now=new Date(); let y=now.getFullYear(); if (new Date(y,m-1,d) > new Date(now.getTime()+86400000)) y--; return y; }
   function iso(y,m,d){
     if (y<100) y+=2000;
     if (m<1||m>12||d<1||d>31) return null;
     const dt = new Date(y,m-1,d); if (dt.getMonth()!==m-1) return null;
-    return y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    return toISO(dt);
   }
   function findDate(line){
-    let m;
-    const l = strip(line);
+    let m; const l = strip(line);
     if ((m = l.match(/(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/))) return { date: iso(+m[1],+m[2],+m[3]), raw: m[0] };
-    if ((m = l.match(/\b(\d{1,2})[\/.-](\d{1,2})(?:[\/.-](\d{2,4}))?\b/))){
-      const d=+m[1], mo=+m[2]; const y = m[3] ? +m[3] : guessYear(mo,d);
-      return { date: iso(y,mo,d), raw: m[0] };
-    }
-    if ((m = l.match(/\b(\d{1,2})(?:er)?\s+(janv|jan|fevr|fev|feb|mars|mar|avr|apr|mai|may|juin|jun|juil|jul|aout|aug|sept|sep|oct|nov|dec)[a-z]*\.?(?:\s+(\d{4}))?/))){
-      const d=+m[1], mo=MONTHS[m[2]]; const y = m[3] ? +m[3] : guessYear(mo,d);
-      return { date: iso(y,mo,d), raw: m[0] };
-    }
+    if ((m = l.match(/\b(\d{1,2})[\/.-](\d{1,2})(?:[\/.-](\d{2,4}))?\b/))){ const d=+m[1], mo=+m[2]; return { date: iso(m[3]?+m[3]:guessYear(mo,d),mo,d), raw: m[0] }; }
+    if ((m = l.match(/\b(\d{1,2})(?:er)?\s+(janv|jan|fevr|fev|feb|mars|mar|avr|apr|mai|may|juin|jun|juil|jul|aout|aug|sept|sep|oct|nov|dec)[a-z]*\.?(?:\s+(\d{4}))?/))){ const d=+m[1], mo=MONTHS[m[2]]; return { date: iso(m[3]?+m[3]:guessYear(mo,d),mo,d), raw: m[0] }; }
     return null;
   }
-  function findMg(text){
-    let m = text.match(/(\d+(?:[.,]\d+)?)\s*mg\b/i);
-    if (m) return parseFloat(m[1].replace(',','.'));
-    const nums = text.match(/\b\d+(?:[.,]\d+)?\b/g);
-    if (!nums) return null;
-    const v = parseFloat(nums[nums.length-1].replace(',','.'));
-    return (v>0 && v<=200) ? v : null;
-  }
-  let pending = [];
   function parseText(txt){
-    // Une prise = une ligne qui COMMENCE par une date et contient une dose en mg.
-    // Les lignes "OUBLIE", les titres, totaux et résultats d'analyse sont ignorés.
     const out = [];
     txt.split(/\r?\n/).forEach(rawLine => {
       const line = rawLine.trim(); if (!line) return;
       const csv = line.match(/^(\d{4}-\d{2}-\d{2});(\d+(?:[.,]\d+)?);(.*)$/);
-      if (csv){
-        const mgc = parseFloat(csv[2].replace(',','.'));
-        if (mgc > 0 && mgc <= 200) out.push({ date: csv[1], mg: mgc, note: csv[3].replace(/^"|"$/g,'').replace(/""/g,'"').slice(0,120) });
-        return;
-      }
+      if (csv){ const v=parseFloat(csv[2].replace(',','.')); if (v>0&&v<=200) out.push({ date: csv[1], mg: v, note: csv[3].replace(/^"|"$/g,'').replace(/""/g,'"').slice(0,120) }); return; }
       const l = strip(line);
       if (/oubli/.test(l)) return;
       const d = findDate(line);
@@ -431,20 +567,15 @@ details[open] summary{margin-bottom:12px}
     });
     return out;
   }
+  let pending = [];
   function showPreview(){
     const p = $('iPreview'); p.hidden = false;
-    if (!pending.length){
-      p.textContent = 'Aucune prise reconnue. Vérifie que chaque ligne contient une date et une dose (ex. « 12/09/2026 40mg »).';
-      $('iDo').hidden = true; return;
-    }
+    if (!pending.length){ p.textContent = 'Aucune prise reconnue. Chaque ligne doit commencer par une date et contenir une dose (ex. « 12/09/2026 = 30MG »).'; $('iDo').hidden = true; return; }
     const tot = pending.reduce((a,e)=>a+e.mg,0);
     p.innerHTML = '';
-    const head = document.createElement('div');
-    head.innerHTML = '<b>'+pending.length+' prises reconnues, '+fmt(tot)+' mg au total</b>';
-    p.appendChild(head);
+    const head = document.createElement('div'); head.innerHTML = '<b>'+pending.length+' prises reconnues, '+fmt(tot)+' mg au total</b>'; p.appendChild(head);
     pending.forEach(e => { const r=document.createElement('div'); r.className='muted'; r.textContent = parseISO(e.date).toLocaleDateString('fr-FR')+' : '+fmt(e.mg,1)+' mg'; p.appendChild(r); });
-    $('iDo').hidden = false;
-    $('iDo').textContent = 'Importer ' + pending.length + ' prises';
+    $('iDo').hidden = false; $('iDo').textContent = 'Importer ' + pending.length + ' prises';
   }
   $('iFile').addEventListener('change', () => {
     const f = $('iFile').files[0]; if (!f) return;
@@ -463,37 +594,20 @@ details[open] summary{margin-bottom:12px}
     render(); queueSave();
   });
 
-  // ---------- export / wipe ----------
-  let downloads = null;
-  $('exportBtn').addEventListener('click', async () => {
-    const csv = 'date;mg;note\n' + state.entries.map(e => e.date+';'+e.mg+';"'+e.note.replace(/"/g,'""')+'"').join('\n');
-    if (downloads){
-      try{ await downloads.save({ filename: 'accutane-' + todayISO() + '.csv', data: csv }); }catch(e){}
-    } else {
-      const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'accutane-' + todayISO() + '.csv';
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    }
-  });
   $('wipeBtn').addEventListener('click', () => {
     if (!state.entries.length) return;
-    if (confirm('Effacer toutes les prises enregistrées ? Cette action est définitive.')){
-      state.entries = []; render(); queueSave();
-    }
+    if (confirm('Effacer toutes les prises enregistrées ? Pense à télécharger une sauvegarde avant. Cette action est définitive.')){ state.entries = []; render(); queueSave(); }
   });
 
-  // ---------- boot ----------
+  // ---------- démarrage ----------
   $('fDate').value = todayISO();
   buildBlister();
   render();
-  setStatus('Enregistré sur cet appareil');
   initBackend();
-  if (window.claude && window.claude.use){
-    window.claude.use('downloads').then(d => { downloads = d; }).catch(()=>{});
-  }
+  if (window.claude && window.claude.use){ window.claude.use('downloads').then(d => { downloads = d; }).catch(()=>{}); }
+  // Recalcule à minuit si la page reste ouverte
+  setInterval(() => { if ($('fDate').dataset.day !== todayISO()){ $('fDate').dataset.day = todayISO(); render(); } }, 60000);
+  $('fDate').dataset.day = todayISO();
 })();
 </script>
 </body>
