@@ -3,208 +3,264 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#7A2232">
-<title>Suivi isotrétinoïne</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💊</text></svg>">
+<meta name="theme-color" content="#ECEEF0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1215" media="(prefers-color-scheme: dark)">
+<title>Isotrétinoïne · suivi de cure</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='9' y='2' width='14' height='28' rx='7' fill='%2374182C'/><rect x='9' y='16' width='14' height='14' rx='0' fill='%23F2D6DC'/><rect x='9' y='16' width='14' height='14' rx='7' fill='%23F2D6DC'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F4F5F6; --card:#FFFFFF; --ink:#1C2126; --muted:#5F6973; --line:#DCE0E4;
-  --foil:#E3E6E9; --foil-edge:#C9CED3; --capsule:#7A2232; --capsule-hi:#A3384B; --on-capsule:#FFFFFF;
-  --ok:#2E7D5B; --ok-bg:#E4F3EB; --miss:#D32F2F; --miss-bg:#FDECEC; --warn:#9A6A12; --warn-bg:#FBF3E2;
-  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --body:"Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --bg:#ECEEF0; --surface:#FFFFFF; --ink:#15191D; --muted:#66707A; --line:#DCE0E4;
+  --panel:#15191D; --on-panel:#F4F6F7; --panel-muted:#9AA4AE; --panel-line:#2B3137;
+  --burg:#74182C; --burg2:#A8324C; --rose:#F4DCE1; --rose2:#FFFFFF;
+  --ok:#1E8A5A; --ok-soft:#E1F2E9; --miss:#DC3A2F; --miss-soft:#FCE8E6; --amber:#A86A0C; --amber-soft:#FBF1DE;
+  --foil-a:#F5F7F8; --foil-b:#C3CAD1; --foil-c:#E4E8EB; --pocket:rgba(255,255,255,.55); --pocket-edge:rgba(20,30,40,.18); --popped:rgba(20,30,40,.16);
+  --font:"Archivo", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --r:20px;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#131619; --card:#1C2024; --ink:#ECEFF1; --muted:#9AA4AD; --line:#2E343A;
-    --foil:#272D32; --foil-edge:#394047; --capsule:#C24A5E; --capsule-hi:#E0687B; --on-capsule:#FFFFFF;
-    --ok:#4FB386; --ok-bg:#16301F; --miss:#FF6B6B; --miss-bg:#381B1D; --warn:#D9A441; --warn-bg:#33291A;
+    --bg:#0F1215; --surface:#181C20; --ink:#EEF1F3; --muted:#96A1AB; --line:#2A3036;
+    --panel:#1E2328; --on-panel:#F4F6F7; --panel-muted:#9AA4AE; --panel-line:#343B42;
+    --burg:#B5364F; --burg2:#DA5A72; --rose:#EBD3D8; --rose2:#FFF6F7;
+    --ok:#3FB37F; --ok-soft:#14291F; --miss:#FF5E54; --miss-soft:#34191A; --amber:#E0A645; --amber-soft:#30260F;
+    --foil-a:#4A525A; --foil-b:#262C31; --foil-c:#3A4249; --pocket:rgba(255,255,255,.06); --pocket-edge:rgba(0,0,0,.45); --popped:rgba(255,255,255,.18);
   }
 }
 :root[data-theme="dark"]{
-  --paper:#131619; --card:#1C2024; --ink:#ECEFF1; --muted:#9AA4AD; --line:#2E343A;
-  --foil:#272D32; --foil-edge:#394047; --capsule:#C24A5E; --capsule-hi:#E0687B; --on-capsule:#FFFFFF;
-  --ok:#4FB386; --ok-bg:#16301F; --miss:#FF6B6B; --miss-bg:#381B1D; --warn:#D9A441; --warn-bg:#33291A;
+  --bg:#0F1215; --surface:#181C20; --ink:#EEF1F3; --muted:#96A1AB; --line:#2A3036;
+  --panel:#1E2328; --on-panel:#F4F6F7; --panel-muted:#9AA4AE; --panel-line:#343B42;
+  --burg:#B5364F; --burg2:#DA5A72; --rose:#EBD3D8; --rose2:#FFF6F7;
+  --ok:#3FB37F; --ok-soft:#14291F; --miss:#FF5E54; --miss-soft:#34191A; --amber:#E0A645; --amber-soft:#30260F;
+  --foil-a:#4A525A; --foil-b:#262C31; --foil-c:#3A4249; --pocket:rgba(255,255,255,.06); --pocket-edge:rgba(0,0,0,.45); --popped:rgba(255,255,255,.18);
 }
 *{box-sizing:border-box}
 [hidden]{display:none !important}
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 var(--body);-webkit-tap-highlight-color:transparent}
-main{max-width:760px;margin:0 auto;padding:22px 16px 110px}
-h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.01em;margin:0}
-h1{font-size:1.05rem;color:var(--muted);font-weight:500}
-h2{font-size:1.2rem;margin-bottom:12px}
-section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:16px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--font);font-variant-numeric:tabular-nums;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
+main{max-width:720px;margin:0 auto;padding:18px 16px 120px}
+h1,h2,h3,h4{margin:0;font-family:var(--font)}
+.wide{font-stretch:118%;font-weight:800;letter-spacing:-.015em}
+.cap::first-letter{text-transform:uppercase}
 .muted{color:var(--muted)}
-.small{font-size:.875rem}
-.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
-.status{font-size:.8rem;color:var(--muted)}
-button{font:600 .95rem var(--body);border-radius:12px;padding:10px 16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;min-height:44px}
-button:disabled{opacity:.4;cursor:default}
-button.primary{background:var(--capsule);border-color:var(--capsule);color:var(--on-capsule)}
-button.ghost{background:none;border:none;color:var(--muted);padding:6px 8px;min-height:36px}
-button.danger{color:var(--miss)}
-input,select,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+:focus-visible{outline:2.5px solid var(--burg2);outline-offset:2px}
+
+button{font:600 .95rem var(--font);border-radius:999px;padding:10px 18px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-height:44px;transition:transform .12s ease, background .15s ease}
+button:active:not(:disabled){transform:scale(.97)}
+button:disabled{opacity:.35;cursor:default}
+button.solid{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+button.link{background:none;border:none;color:var(--muted);padding:6px 4px;min-height:36px;text-decoration:underline;text-underline-offset:3px;font-weight:500}
+button.link.danger{color:var(--miss)}
+input,select,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 13px;width:100%}
 textarea{min-height:110px;resize:vertical;font-size:.9rem}
-:focus-visible{outline:2px solid var(--capsule);outline-offset:2px}
-label{display:flex;flex-direction:column;gap:4px;font-size:.875rem;color:var(--muted);flex:1 1 140px}
+label{display:flex;flex-direction:column;gap:5px;font-size:.85rem;color:var(--muted);font-weight:500;flex:1 1 140px}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
 
-/* ---- aujourd'hui ---- */
-.today{border:2px solid var(--capsule)}
-.today .when{font-family:var(--display);font-size:1.5rem;line-height:1.2}
-.cap::first-letter{text-transform:uppercase}
-.today .sub{color:var(--muted);font-size:.9rem;margin-top:2px}
-.dose{display:flex;align-items:center;gap:10px;margin:16px 0 12px}
-.dose button{width:48px;height:48px;padding:0;font-size:1.4rem;border-radius:50%}
-.dose output{font-family:var(--display);font-size:2rem;font-weight:700;min-width:110px;text-align:center}
-.take{width:100%;font-size:1.1rem;padding:16px;margin-top:12px}
-.done{display:flex;align-items:center;gap:14px;margin-top:14px;padding:14px;border-radius:12px;background:var(--ok-bg)}
-.done .tick{flex:none;width:44px;height:44px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700}
-.done b{display:block;font-size:1.05rem}
-.streak{margin-top:12px;font-size:.92rem;font-weight:600}
-.streak.good{color:var(--ok)}
-.streak.bad{color:var(--miss)}
+/* ---------- en-tête ---------- */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 2px 16px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand svg{flex:none}
+.brand h1{font-size:1.05rem;font-stretch:112%;font-weight:800;letter-spacing:-.01em}
+.brand small{display:block;font-size:.78rem;color:var(--muted);font-weight:500;font-stretch:100%;letter-spacing:0}
+.status{font-size:.76rem;color:var(--muted);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.status.warn::before{background:var(--amber)}
 
-/* ---- progression ---- */
-.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:center}
-@media (max-width:600px){.hero{grid-template-columns:1fr}.blister{max-width:280px;margin:0 auto;gap:4px;padding:10px}}
-.total{font-family:var(--display);font-size:clamp(2.5rem,10vw,3.8rem);line-height:1;font-weight:700}
-.total small{font-size:.38em;font-weight:500;color:var(--muted);margin-left:4px}
-.of{margin-top:6px;color:var(--muted);font-size:.92rem}
-.pct{font-family:var(--display);font-size:1.5rem;margin-top:12px}
-.bar{height:8px;border-radius:99px;background:var(--foil);overflow:hidden;margin-top:8px}
-.bar i{display:block;height:100%;background:var(--capsule);width:0}
-.blister{background:var(--foil);border:1px solid var(--foil-edge);border-radius:16px;padding:12px;display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
-.cell{aspect-ratio:1/1.45;border-radius:999px;background:var(--paper);border:1px solid var(--foil-edge);position:relative;overflow:hidden}
-.cell i{position:absolute;inset:auto 0 0 0;background:linear-gradient(180deg,var(--capsule-hi),var(--capsule));height:0}
-.legend{margin-top:8px;text-align:center}
+/* ---------- étiquette du jour ---------- */
+.label{background:var(--panel);color:var(--on-panel);border-radius:var(--r);overflow:hidden;position:relative}
+.label .strip{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:16px 20px 14px;border-bottom:1.5px dashed var(--panel-line)}
+.label .strip .d{font-size:1.02rem;font-weight:700}
+.label .strip .t{font-size:.8rem;color:var(--panel-muted)}
+.label .body{padding:18px 20px 20px}
+.dosebox{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dosebox .v{font-size:clamp(2.8rem,13vw,3.6rem);line-height:1;font-stretch:122%;font-weight:800;letter-spacing:-.03em}
+.dosebox .v small{font-size:.36em;font-weight:600;font-stretch:100%;letter-spacing:0;color:var(--panel-muted);margin-left:6px}
+.steps{display:flex;gap:8px}
+.steps button{width:46px;height:46px;padding:0;font-size:1.35rem;font-weight:500;background:transparent;color:var(--on-panel);border:1.5px solid var(--panel-line)}
+.dosewarn{margin-top:8px;font-size:.84rem;color:var(--amber)}
+.label input{background:rgba(255,255,255,.06);border-color:var(--panel-line);color:var(--on-panel);margin-top:14px}
+.label input::placeholder{color:var(--panel-muted)}
+/* bouton gélule */
+.capsule-btn{position:relative;display:block;width:100%;margin-top:14px;height:64px;border-radius:999px;border:none;padding:0;overflow:hidden;
+  background:linear-gradient(90deg,var(--burg) 0 52%,var(--rose) 52% 100%);box-shadow:inset 0 -6px 12px rgba(0,0,0,.18), inset 0 6px 10px rgba(255,255,255,.18), 0 10px 24px rgba(116,24,44,.35)}
+.capsule-btn::after{content:"";position:absolute;left:24px;right:24px;top:9px;height:10px;border-radius:99px;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0))}
+.capsule-btn span{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;height:100%;font-size:1.06rem;font-weight:800;font-stretch:110%;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35);
+  background:linear-gradient(90deg,transparent 0 52%,transparent 52%);}
+.capsule-btn span b{background:var(--burg);padding:6px 14px;border-radius:99px;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+.taken{display:flex;align-items:center;gap:14px}
+.taken .ok{flex:none;width:52px;height:52px;border-radius:50%;background:var(--ok);display:grid;place-items:center}
+.taken b{display:block;font-size:1.35rem;font-stretch:115%;font-weight:800;letter-spacing:-.01em}
+.taken span{color:var(--panel-muted);font-size:.88rem}
+.label .undo{color:var(--panel-muted);margin-top:10px}
+.chip{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:.84rem;font-weight:700;border-radius:99px;padding:6px 12px}
+.chip.bad{background:rgba(255,94,84,.16);color:#FF8A82}
+.chip.good{background:rgba(63,179,127,.18);color:#6FD3A3}
+.chip.neutral{background:rgba(255,255,255,.08);color:var(--panel-muted)}
 
-/* ---- fin ---- */
-.eta{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
-.eta > div{border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-.eta .k{font-size:.85rem;color:var(--muted);font-weight:600}
-.eta b{display:block;font-family:var(--display);font-size:1.55rem;line-height:1.2;margin-top:4px}
-.eta .date{font-weight:600}
-.eta .how{color:var(--muted);font-size:.85rem;margin-top:6px}
-.eta .ideal{border-color:var(--ok);background:var(--ok-bg)}
-.eta .real{border-color:var(--miss);background:var(--miss-bg)}
+/* ---------- plaquette ---------- */
+.pack-wrap{margin-top:26px}
+.figure{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:0 4px}
+.figure .big{font-size:clamp(2.6rem,12vw,3.6rem);line-height:.95;font-stretch:122%;font-weight:800;letter-spacing:-.035em}
+.figure .big small{font-size:.34em;font-stretch:100%;font-weight:600;letter-spacing:0;color:var(--muted);margin-left:6px}
+.figure .side{text-align:right;font-size:.88rem;color:var(--muted);line-height:1.4}
+.figure .side b{color:var(--ink);font-size:1.5rem;font-stretch:118%;font-weight:800;display:block;line-height:1.1}
+.pack{margin-top:14px;border-radius:22px;padding:16px 14px;position:relative;
+  background:linear-gradient(115deg,var(--foil-a) 0%,var(--foil-b) 26%,var(--foil-c) 48%,var(--foil-a) 60%,var(--foil-b) 82%,var(--foil-c) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7), inset 0 -1px 0 rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.08), 0 14px 30px -12px rgba(20,30,40,.35)}
+.pack::before{content:"";position:absolute;inset:7px;border-radius:16px;border:1px dashed rgba(20,30,40,.14);pointer-events:none}
+.pockets{display:grid;grid-template-columns:repeat(10,1fr);gap:9px 8px;position:relative}
+.pocket{aspect-ratio:1/1.75;border-radius:999px;background:var(--pocket);box-shadow:inset 0 2px 4px var(--pocket-edge), 0 1px 0 rgba(255,255,255,.6);position:relative;overflow:hidden}
+.pill{position:absolute;inset:3px;border-radius:999px;overflow:hidden;
+  background:linear-gradient(180deg,var(--burg2) 0%,var(--burg) 47%,#3d0c17 50%,var(--rose) 51%,var(--rose2) 100%);
+  box-shadow:inset -3px 0 5px rgba(0,0,0,.22)}
+.pill::after{content:"";position:absolute;left:22%;width:18%;top:8%;bottom:8%;border-radius:99px;background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,.15))}
+.pocket.popped{background:transparent;box-shadow:inset 0 0 0 1.5px var(--popped)}
+.pocket.popped::before{content:"";position:absolute;inset:20% 18%;border-radius:40% 60% 45% 55%;background:repeating-linear-gradient(135deg,var(--popped) 0 2px,transparent 2px 5px)}
+.pack-legend{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin-top:10px;padding:0 4px}
+.meter{height:6px;border-radius:99px;background:var(--line);margin-top:12px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--burg),var(--burg2));border-radius:99px}
 
-/* ---- calendrier ---- */
-.calhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
-.calhead h3{font-size:1.15rem;text-align:center;flex:1}
-.calhead button{width:44px;padding:0;font-size:1.2rem}
-.monthsum{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-size:.85rem;color:var(--muted);margin-bottom:10px}
-.monthsum b{color:var(--ink)}
+/* ---------- carte ---------- */
+.card{background:var(--surface);border-radius:var(--r);padding:20px;margin-top:22px;box-shadow:0 1px 0 var(--line)}
+.card > h2{font-size:1.25rem;margin-bottom:4px}
+.card > .sub{color:var(--muted);font-size:.88rem;margin-bottom:16px}
+
+/* ---------- frise de fin ---------- */
+.eta-head{font-size:clamp(1.5rem,6.5vw,2rem);line-height:1.12;font-stretch:115%;font-weight:800;letter-spacing:-.02em;margin:2px 0 4px}
+.eta-head em{font-style:normal;color:var(--ok)}
+.track{position:relative;height:12px;margin:26px 8px 18px;border-radius:99px;background:var(--line)}
+.track .seg{position:absolute;top:0;bottom:0;border-radius:99px}
+.track .done{background:var(--ink);left:0}
+.track .ideal{background:var(--ok)}
+.track .real{background:repeating-linear-gradient(135deg,var(--miss) 0 6px,transparent 6px 10px);opacity:.75}
+.track .pin{position:absolute;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:3px solid var(--surface);box-shadow:0 0 0 1.5px var(--line)}
+.pin.today{background:var(--ink);width:24px;height:24px;margin:-12px 0 0 -12px}
+.pin.i{background:var(--ok)} .pin.r{background:var(--miss)}
+.pin.today::after{content:"Aujourd'hui";position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-size:.72rem;font-weight:700;white-space:nowrap;color:var(--ink)}
+.pin.today.l::after{left:-6px;transform:none}
+.pin.today.rr::after{left:auto;right:-6px;transform:none}
+.eta-rows{display:grid;gap:2px;margin-top:6px}
+.eta-row{display:grid;grid-template-columns:14px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-top:1px solid var(--line)}
+.eta-row .dot{width:12px;height:12px;border-radius:50%;margin-top:5px}
+.eta-row b{display:block;font-weight:700}
+.eta-row span{font-size:.85rem;color:var(--muted)}
+.eta-row .when{text-align:right;font-weight:800;font-stretch:110%;white-space:nowrap}
+.eta-row .when small{display:block;font-weight:500;font-stretch:100%;color:var(--muted);font-size:.8rem}
+
+/* ---------- calendrier ---------- */
+.calhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:2px auto 6px;max-width:460px}
+.calhead h3{font-size:1.2rem;font-stretch:115%;font-weight:800;text-align:center;flex:1}
+.calhead button{width:44px;height:44px;padding:0;font-size:1.25rem;background:var(--bg);border-color:transparent}
+.monthsum{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:.84rem;color:var(--muted);margin:0 auto 14px;max-width:460px}
+.monthsum b{color:var(--ink);font-weight:800}
 .monthsum .m b{color:var(--miss)}
-.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:460px;margin:0 auto}
-.calhead,.monthsum,.keys{max-width:460px;margin-left:auto;margin-right:auto}
-.wd{font-size:.72rem;color:var(--muted);text-align:center;padding-bottom:2px}
-.dcell{aspect-ratio:1;min-height:0;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font:600 .82rem var(--body);color:var(--muted);background:var(--paper);border:1px solid transparent;padding:0;line-height:1.1}
-.dcell small{font-size:.6rem;font-weight:500;opacity:.9}
+.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;max-width:460px;margin:0 auto}
+.wd{font-size:.72rem;color:var(--muted);text-align:center;font-weight:600;padding-bottom:3px}
+.dcell{aspect-ratio:1;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font:700 .86rem var(--font);color:var(--muted);background:var(--bg);border:none;padding:0;min-height:0;line-height:1}
+.dcell small{font-size:.58rem;font-weight:600;opacity:.85}
 .dcell.taken{background:var(--ok);color:#fff}
 .dcell.missed{background:var(--miss);color:#fff}
-.dcell.pending{background:var(--card);color:var(--ink);border:2px dashed var(--capsule)}
-.dcell.future,.dcell.before{opacity:.45}
-.dcell.goal{border:2px solid var(--ok);color:var(--ok);opacity:1}
-.dcell.sel{box-shadow:0 0 0 3px var(--ink)}
-.keys{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:.8rem;color:var(--muted)}
-.keys span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--k);border:var(--b,none)}
-
-.daypanel{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
-.daypanel h4{margin:0 0 8px;font:700 1rem var(--body)}
+.dcell.pending{background:var(--surface);color:var(--burg2);box-shadow:inset 0 0 0 2px var(--burg2)}
+.dcell.future,.dcell.before{background:transparent;color:var(--muted);opacity:.55}
+.dcell.goal{opacity:1;color:var(--ok);box-shadow:inset 0 0 0 2px var(--ok);background:var(--ok-soft)}
+.dcell.sel{outline:2.5px solid var(--ink);outline-offset:2px}
+.keys{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:14px auto 0;font-size:.78rem;color:var(--muted);max-width:460px}
+.keys span{display:inline-flex;align-items:center;gap:6px}
+.keys i{width:10px;height:10px;border-radius:4px;display:inline-block}
+.daypanel{margin-top:18px;background:var(--bg);border-radius:16px;padding:16px}
+.daypanel h4{font-size:1rem;font-weight:800;margin-bottom:8px}
 .entry{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
-.entry:last-of-type{border-bottom:none}
-.entry .t{font-size:.92rem}
-.entry .t b{font-family:var(--display)}
+.entry .t{font-size:.92rem;overflow-wrap:anywhere}
+.entry .t b{font-weight:800}
 .entry .t span{color:var(--muted)}
-.tag{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:99px}
-.tag.miss{background:var(--miss-bg);color:var(--miss)}
-.tag.ok{background:var(--ok-bg);color:var(--ok)}
-.addday{margin-top:10px}
-.addday .row label{flex:1 1 110px}
-.addday .row label.notefield{flex:3 1 200px}
-
-.journal{margin-top:16px}
-.jrow{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;border:none;border-radius:10px;background:none;padding:9px 10px;min-height:0;font-weight:400;align-items:flex-start}
-.jrow + .jrow{margin-top:2px}
-.jrow .d{display:block;font-weight:600;font-size:.9rem}
-.jrow .n{color:var(--muted);font-size:.85rem;display:block;overflow-wrap:anywhere}
-.jrow .s{font-family:var(--display);font-weight:700;white-space:nowrap}
-.jrow.miss{background:var(--miss-bg)}
+.tag{display:inline-block;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:99px}
+.tag.miss{background:var(--miss-soft);color:var(--miss)}
+.tag.ok{background:var(--ok-soft);color:var(--ok)}
+.tag.due{background:var(--surface);color:var(--burg2);box-shadow:inset 0 0 0 1.5px var(--burg2)}
+.addday{margin-top:12px}
+.addday label{flex:1 1 100px}
+.addday label.notefield{flex:3 1 180px}
+.addday input{background:var(--surface)}
+.journal{margin-top:18px}
+.journal h4{font-size:.85rem;color:var(--muted);font-weight:600;margin:0 0 6px}
+.jrow{display:flex;justify-content:space-between;gap:12px;width:100%;text-align:left;border:none;border-radius:12px;background:none;padding:10px 12px;min-height:0;font-weight:400;align-items:flex-start}
+.jrow:hover{background:var(--bg)}
+.jrow .d{display:block;font-weight:700;font-size:.9rem}
+.jrow .n{display:block;color:var(--muted);font-size:.82rem;overflow-wrap:anywhere;line-height:1.4;margin-top:2px}
+.jrow .s{font-weight:800;white-space:nowrap;font-stretch:110%}
+.jrow.miss{background:var(--miss-soft)}
 .jrow.miss .d,.jrow.miss .s{color:var(--miss)}
-.jrow.sel{outline:2px solid var(--ink);outline-offset:-2px}
+.jrow.sel{box-shadow:inset 0 0 0 2px var(--ink)}
 
-/* ---- stats ---- */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px 18px}
-.stat b{display:block;font-family:var(--display);font-size:1.3rem;font-weight:700}
-.stat span{color:var(--muted);font-size:.85rem}
-.stat.bad b{color:var(--miss)}
-.stat.good b{color:var(--ok)}
+/* ---------- chiffres ---------- */
+.figures{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin-top:6px}
+@media (min-width:600px){.figures{grid-template-columns:repeat(4,1fr)}}
+.fig{padding:14px 4px 14px 0;border-top:1px solid var(--line)}
+.fig b{display:block;font-size:1.4rem;font-stretch:118%;font-weight:800;letter-spacing:-.01em;line-height:1.15}
+.fig span{font-size:.8rem;color:var(--muted)}
+.fig.bad b{color:var(--miss)} .fig.good b{color:var(--ok)}
 
-/* ---- sauvegarde ---- */
-.backup-alert{background:var(--warn-bg);border-radius:10px;padding:10px 12px;color:var(--warn);font-weight:600;font-size:.9rem;margin-bottom:12px}
+/* ---------- outils ---------- */
+.tools h3{font-size:1rem;font-weight:800;margin:0 0 8px}
+.tools .block + .block{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.alert{background:var(--amber-soft);color:var(--amber);border-radius:12px;padding:10px 14px;font-weight:600;font-size:.88rem;margin-bottom:12px}
+.hint{font-size:.85rem;color:var(--muted);margin:6px 0 12px}
 .hidden-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.msg{margin-top:10px;font-size:.9rem}
-details summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:1.1rem;min-height:28px}
-details[open] summary{margin-bottom:12px}
-.preview{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-top:10px;font-size:.9rem}
-.note{border-left:3px solid var(--warn);padding:2px 0 2px 12px;color:var(--muted);font-size:.85rem;margin-top:18px}
-.empty{color:var(--muted);padding:6px 0}
+.msg{margin-top:10px;font-size:.88rem}
+details summary{cursor:pointer;font-weight:800;font-size:1rem;min-height:28px;list-style-position:inside}
+.preview{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-top:10px;font-size:.88rem}
+.disclaimer{font-size:.8rem;color:var(--muted);text-align:center;margin:26px auto 0;max-width:520px;line-height:1.5}
+.empty{color:var(--muted);font-size:.9rem;padding:4px 0}
 
-/* ---- toast ---- */
+/* ---------- toast ---------- */
 .toastwrap{position:fixed;left:0;right:0;bottom:0;padding:0 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;pointer-events:none;z-index:10}
-.toast{pointer-events:auto;background:var(--ink);color:var(--paper);border-radius:12px;padding:10px 10px 10px 16px;display:flex;align-items:center;gap:12px;max-width:520px;width:100%;box-shadow:0 8px 24px rgba(0,0,0,.25);font-size:.92rem}
-.toast[hidden]{display:none}
+.toast{pointer-events:auto;background:var(--ink);color:var(--bg);border-radius:999px;padding:8px 8px 8px 20px;display:flex;align-items:center;gap:12px;max-width:520px;width:100%;box-shadow:0 12px 32px rgba(0,0,0,.28);font-size:.9rem;font-weight:600}
 .toast span{flex:1}
-.toast button{background:none;border:1px solid currentColor;color:inherit;min-height:36px;padding:6px 12px}
+.toast button{background:var(--bg);color:var(--ink);border:none;min-height:38px;padding:6px 16px}
 @media (prefers-reduced-motion:no-preference){
-  .cell i,.bar i{transition:height .5s ease,width .5s ease}
-  .toast{animation:up .2s ease}
-  @keyframes up{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+  .meter i{transition:width .6s cubic-bezier(.2,.8,.2,1)}
+  .toast{animation:up .22s ease}
+  @keyframes up{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+  .pocket.just .pill{animation:pop .5s ease forwards}
+  @keyframes pop{0%{transform:none;opacity:1}100%{transform:translateY(-30%) scale(.6);opacity:0}}
 }
+@media (min-width:600px){ .pockets{grid-template-columns:repeat(25,1fr);gap:10px 6px} .pack{padding:18px 18px} }
+@media (max-width:420px){ .pockets{gap:7px 6px} .pack{padding:14px 12px} .label .body,.label .strip{padding-left:16px;padding-right:16px} .card{padding:18px 16px} }
 </style>
 </head>
 <body>
 <main>
-  <div class="top">
-    <h1>Cure d'isotrétinoïne</h1>
-    <div class="status" id="status" role="status">Chargement…</div>
-  </div>
-
-  <!-- AUJOURD'HUI -->
-  <section class="today" id="todayCard" aria-live="polite"></section>
-
-  <!-- PROGRESSION -->
-  <section>
-    <div class="hero">
-      <div>
-        <div class="total" id="total">0<small>mg</small></div>
-        <div class="of" id="of"></div>
-        <div class="pct" id="pct">0 %</div>
-        <div class="bar"><i id="barFill"></i></div>
-        <div class="muted small" id="remain" style="margin-top:6px"></div>
-      </div>
-      <div>
-        <div class="blister" id="blister" aria-hidden="true"></div>
-        <div class="legend muted small">Chaque alvéole = 1 % de l'objectif</div>
-      </div>
+  <header class="top">
+    <div class="brand">
+      <svg width="16" height="30" viewBox="0 0 16 30" aria-hidden="true"><defs><clipPath id="cp"><rect width="16" height="30" rx="8"/></clipPath></defs><g clip-path="url(#cp)"><rect width="16" height="15" fill="var(--burg)"/><rect y="15" width="16" height="15" fill="var(--rose)"/></g><rect x="3" y="3" width="3" height="24" rx="1.5" fill="#fff" opacity=".45"/></svg>
+      <div><h1>Isotrétinoïne</h1><small id="subtitle">Suivi de cure</small></div>
     </div>
+    <div class="status" id="status" role="status">Chargement…</div>
+  </header>
+
+  <section class="label" id="todayCard" aria-live="polite"></section>
+
+  <section class="pack-wrap" aria-label="Progression">
+    <div class="figure">
+      <div class="big" id="total">0<small>mg</small></div>
+      <div class="side"><b id="pct">0 %</b><span id="of"></span></div>
+    </div>
+    <div class="pack"><div class="pockets" id="pockets" aria-hidden="true"></div></div>
+    <div class="meter"><i id="meter"></i></div>
+    <div class="pack-legend"><span id="remain"></span><span id="podLegend"></span></div>
   </section>
 
-  <!-- FIN -->
-  <section>
-    <h2>Fin du traitement</h2>
-    <div class="eta" id="eta"></div>
+  <section class="card">
+    <h2 class="wide">Fin du traitement</h2>
+    <div id="eta"></div>
   </section>
 
-  <!-- CALENDRIER -->
-  <section id="calSection">
-    <h2>Calendrier</h2>
+  <section class="card" id="calSection">
+    <h2 class="wide">Calendrier</h2>
+    <div class="sub">Touche un jour pour voir ses notes ou rattraper une prise.</div>
     <div class="calhead">
       <button type="button" id="prevM" aria-label="Mois précédent">‹</button>
       <h3 id="monthTitle" class="cap"></h3>
@@ -213,72 +269,67 @@ details[open] summary{margin-bottom:12px}
     <div class="monthsum" id="monthSum"></div>
     <div class="grid7" id="calGrid"></div>
     <div class="keys">
-      <span style="--k:var(--ok)">Prise</span>
-      <span style="--k:var(--miss)">Oubli</span>
-      <span style="--k:var(--card);--b:2px dashed var(--capsule)">À prendre</span>
-      <span style="--k:transparent;--b:2px solid var(--ok)">Fin estimée</span>
+      <span><i style="background:var(--ok)"></i>Prise</span>
+      <span><i style="background:var(--miss)"></i>Oubli</span>
+      <span><i style="box-shadow:inset 0 0 0 2px var(--burg2)"></i>À prendre</span>
+      <span><i style="background:var(--ok-soft);box-shadow:inset 0 0 0 2px var(--ok)"></i>Fin estimée</span>
     </div>
     <div class="daypanel" id="dayPanel"></div>
     <div class="journal" id="journal"></div>
   </section>
 
-  <!-- STATS -->
-  <section>
-    <h2>Statistiques</h2>
-    <div class="stats" id="stats"></div>
+  <section class="card">
+    <h2 class="wide">En chiffres</h2>
+    <div class="figures" id="stats"></div>
   </section>
 
-  <!-- SAUVEGARDE -->
-  <section>
-    <h2>Sauvegarde</h2>
-    <div id="backupInfo"></div>
-    <div class="row">
-      <button type="button" class="primary" id="saveBtn">Télécharger la sauvegarde</button>
-      <button type="button" id="loadBtn">Importer une sauvegarde</button>
-      <input type="file" id="loadFile" class="hidden-input" accept=".json,application/json" tabindex="-1" aria-hidden="true">
-    </div>
-    <div class="msg" id="saveMsg" role="status"></div>
-  </section>
-
-  <!-- RÉGLAGES -->
-  <section>
-    <h2>Réglages</h2>
-    <div class="row">
-      <label>Poids (kg)<input type="number" id="sWeight" min="30" max="250" step="0.1" inputmode="decimal"></label>
-      <label>Objectif cumulé
-        <select id="sTarget">
-          <option value="120">120 mg/kg</option>
-          <option value="135">135 mg/kg</option>
-          <option value="150">150 mg/kg</option>
-          <option value="custom">Autre…</option>
-        </select>
-      </label>
-      <label id="customWrap" hidden>Valeur perso (mg/kg)<input type="number" id="sCustom" min="1" max="400" step="1" inputmode="numeric"></label>
-    </div>
-    <p class="muted small" id="targetExplain"></p>
-    <p class="muted small">Une prise faite entre minuit et 5 h compte pour la veille (ex. prise à 0 h 30 = prise du soir précédent).</p>
-  </section>
-
-  <!-- IMPORT TEXTE -->
-  <section>
-    <details>
-      <summary>Importer depuis un fichier texte</summary>
-      <p class="muted small">Choisis ton ACCUTANE.txt ou colle son contenu. Une prise = une ligne qui commence par une date et contient une dose en mg (ex. « 12/09/2026 = 30MG … »). Les lignes « OUBLIE », les totaux et les analyses sont ignorés, et les doublons ne sont pas réimportés.</p>
-      <label>Fichier .txt<input type="file" id="iFile" accept=".txt,.csv,text/plain,text/csv"></label>
-      <label style="margin-top:10px">Ou colle le texte<textarea id="iText" placeholder="12/09/2026 = 30MG PRISE A 22H00"></textarea></label>
-      <div class="row" style="margin-top:10px">
-        <button type="button" id="iParse">Analyser</button>
-        <button type="button" class="primary" id="iDo" hidden>Importer</button>
+  <section class="card tools">
+    <div class="block">
+      <h3>Sauvegarde</h3>
+      <div id="backupInfo"></div>
+      <div class="row">
+        <button type="button" class="solid" id="saveBtn">Télécharger la sauvegarde</button>
+        <button type="button" id="loadBtn">Importer une sauvegarde</button>
+        <input type="file" id="loadFile" class="hidden-input" accept=".json,application/json" tabindex="-1" aria-hidden="true">
       </div>
-      <div class="preview" id="iPreview" hidden></div>
-    </details>
+      <div class="msg" id="saveMsg" role="status"></div>
+    </div>
+    <div class="block">
+      <h3>Réglages</h3>
+      <div class="row">
+        <label>Poids (kg)<input type="number" id="sWeight" min="30" max="250" step="0.1" inputmode="decimal"></label>
+        <label>Objectif cumulé
+          <select id="sTarget">
+            <option value="120">120 mg/kg</option>
+            <option value="135">135 mg/kg</option>
+            <option value="150">150 mg/kg</option>
+            <option value="custom">Autre…</option>
+          </select>
+        </label>
+        <label id="customWrap" hidden>Valeur perso (mg/kg)<input type="number" id="sCustom" min="1" max="400" step="1" inputmode="numeric"></label>
+      </div>
+      <p class="hint" id="targetExplain"></p>
+      <p class="hint">Une prise faite entre minuit et 5 h compte pour la veille (prise à 0 h 30 = prise du soir précédent).</p>
+    </div>
+    <div class="block">
+      <details>
+        <summary>Importer depuis un fichier texte</summary>
+        <p class="hint">Choisis ton ACCUTANE.txt ou colle son contenu. Une prise = une ligne qui commence par une date et contient une dose en mg (ex. « 12/09/2026 = 30MG … »). Les lignes « OUBLIE », les totaux et les analyses sont ignorés, et les doublons ne sont pas réimportés.</p>
+        <label>Fichier .txt<input type="file" id="iFile" accept=".txt,.csv,text/plain,text/csv"></label>
+        <label style="margin-top:10px">Ou colle le texte<textarea id="iText" placeholder="12/09/2026 = 30MG PRISE A 22H00"></textarea></label>
+        <div class="row" style="margin-top:10px">
+          <button type="button" id="iParse">Analyser</button>
+          <button type="button" class="solid" id="iDo" hidden>Importer</button>
+        </div>
+        <div class="preview" id="iPreview" hidden></div>
+      </details>
+    </div>
+    <div class="block">
+      <button type="button" class="link danger" id="wipeBtn">Tout effacer</button>
+    </div>
   </section>
 
-  <section>
-    <button type="button" class="ghost danger" id="wipeBtn">Tout effacer</button>
-  </section>
-
-  <p class="note">Repère indicatif : l'objectif cumulé et la dose quotidienne sont fixés par ton dermatologue. Ne modifie pas ton traitement à partir de ce compteur.</p>
+  <p class="disclaimer">Repère indicatif. L'objectif cumulé et la dose quotidienne sont fixés par ton dermatologue : ne modifie pas ton traitement à partir de ce compteur.</p>
 </main>
 
 <div class="toastwrap"><div class="toast" id="toast" role="status" hidden><span id="toastText"></span><button type="button" id="toastUndo">Annuler</button></div></div>
@@ -295,7 +346,7 @@ details[open] summary{margin-bottom:12px}
 
   let state = { weightKg: 74, targetPerKg: 150, entries: [] };
   let backend = null, saveTimer = null, downloads = null;
-  let ui = { month: null, selected: null, dose: null };
+  let ui = { month: null, selected: null, dose: null, note: '', justPopped: false };
 
   // ---------- dates ----------
   const pad = n => String(n).padStart(2,'0');
@@ -326,16 +377,16 @@ details[open] summary{margin-bottom:12px}
   function localSave(s){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(s)); return true; }catch(e){ return false; } }
   function getLastBackup(){ try{ return localStorage.getItem(BACKUP_KEY); }catch(e){ return null; } }
   function setLastBackup(){ try{ localStorage.setItem(BACKUP_KEY, new Date().toISOString()); }catch(e){} }
-  const setStatus = t => { $('status').textContent = t; };
+  const setStatus = (t, warn) => { $('status').textContent = t; $('status').classList.toggle('warn', !!warn); };
 
   function persist(){
     clearTimeout(saveTimer);
     saveTimer = setTimeout(async () => {
       const ok = localSave(state);
       if (backend){
-        try{ await backend.save(state); setStatus('Synchronisé ✓'); return; }catch(e){}
+        try{ await backend.save(state); setStatus('Synchronisé'); return; }catch(e){}
       }
-      setStatus(ok ? 'Enregistré sur cet appareil ✓' : 'Impossible d\'enregistrer : fais une sauvegarde');
+      setStatus(ok ? 'Enregistré' : 'Non enregistré : fais une sauvegarde', !ok);
     }, 250);
   }
 
@@ -368,7 +419,7 @@ details[open] summary{margin-bottom:12px}
       if (snap.exists){ state = sanitize(snap.data()); localSave(state); }
       else if (state.entries.length){ await ref.set(JSON.parse(JSON.stringify(state))); }
       backend = { save: s => ref.set(JSON.parse(JSON.stringify(s))) };
-      setStatus('Synchronisé ✓');
+      setStatus('Synchronisé');
       render();
     }catch(e){}
   }
@@ -423,25 +474,26 @@ details[open] summary{margin-bottom:12px}
              adherence, streak, best, gap, currentDose, prisesLeft, idealDays, idealEnd, realDays, realEnd };
   }
 
-  // ---------- rendu : aujourd'hui ----------
+  // ---------- rendu : étiquette du jour ----------
+  const SVG_CHECK = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   function renderToday(c){
     const el = $('todayCard'); el.innerHTML = '';
-    const head = document.createElement('div');
-    const w = document.createElement('div'); w.className='when cap'; w.textContent = longDate(c.today).replace(/ \d{4}$/,''); head.appendChild(w);
-    const sub = document.createElement('div'); sub.className='sub';
-    const now = new Date();
-    sub.textContent = now.getHours() < CUTOFF_HOUR ? 'Il est ' + hhmm() + ' : ta prise compte encore pour cette journée.' : 'Ta prise du jour';
-    head.appendChild(sub); el.appendChild(head);
+    const strip = document.createElement('div'); strip.className='strip';
+    const d = document.createElement('div'); d.className='d cap'; d.textContent = 'Prise du ' + longDate(c.today).replace(/ \d{4}$/,'');
+    const t = document.createElement('div'); t.className='t';
+    t.textContent = new Date().getHours() < CUTOFF_HOUR ? 'Il est ' + hhmm() + ', ça compte encore pour hier soir' : (c.first ? 'Jour ' + (dayDiff(c.first, c.today)+1) + ' de cure' : 'Premier jour');
+    strip.append(d, t); el.appendChild(strip);
+    const body = document.createElement('div'); body.className='body'; el.appendChild(body);
 
     if (c.tookToday){
       const list = c.byDay[c.today];
-      const done = document.createElement('div'); done.className='done';
-      const tick = document.createElement('div'); tick.className='tick'; tick.textContent='✓';
+      const box = document.createElement('div'); box.className='taken';
+      const ok = document.createElement('div'); ok.className='ok'; ok.innerHTML = SVG_CHECK;
       const txt = document.createElement('div');
       const b = document.createElement('b'); b.textContent = 'Prise faite · ' + fmt(list.reduce((a,e)=>a+e.mg,0),1) + ' mg';
-      const s = document.createElement('span'); s.className='muted small'; s.textContent = list.map(e=>e.note).filter(Boolean).join(' · ') || 'Bien joué, à demain.';
-      txt.append(b, s); done.append(tick, txt); el.appendChild(done);
-      const undo = document.createElement('button'); undo.type='button'; undo.className='ghost'; undo.style.marginTop='8px';
+      const s = document.createElement('span'); s.textContent = list.map(e=>e.note).filter(Boolean).join(' · ') || 'Bien joué. Rendez-vous demain soir.';
+      txt.append(b, s); box.append(ok, txt); body.appendChild(box);
+      const undo = document.createElement('button'); undo.type='button'; undo.className='link undo';
       undo.textContent = 'Annuler la prise d\'aujourd\'hui';
       undo.onclick = () => {
         if (!confirm('Supprimer ta prise d\'aujourd\'hui ?')) return;
@@ -449,71 +501,113 @@ details[open] summary{margin-bottom:12px}
         state.entries = state.entries.filter(e=>e.date!==c.today);
         commit(); toast('Prise d\'aujourd\'hui supprimée', () => { state.entries.push(...removed); sortEntries(); commit(); });
       };
-      el.appendChild(undo);
+      body.appendChild(undo);
     } else {
       if (ui.dose === null) ui.dose = c.currentDose || 20;
-      const dose = document.createElement('div'); dose.className='dose';
+      const box = document.createElement('div'); box.className='dosebox';
+      const v = document.createElement('div'); v.className='v'; v.innerHTML = fmt(ui.dose,1) + '<small>mg</small>'; v.setAttribute('aria-live','polite');
+      const steps = document.createElement('div'); steps.className='steps';
       const minus = document.createElement('button'); minus.type='button'; minus.textContent='−'; minus.setAttribute('aria-label','Diminuer la dose de 10 mg');
-      const out = document.createElement('output'); out.textContent = fmt(ui.dose,1)+' mg'; out.setAttribute('aria-live','polite');
       const plus = document.createElement('button'); plus.type='button'; plus.textContent='+'; plus.setAttribute('aria-label','Augmenter la dose de 10 mg');
       minus.disabled = ui.dose <= 10; plus.disabled = ui.dose >= MAX_MG;
-      minus.onclick = () => { ui.dose = Math.max(10, ui.dose-10); renderToday(compute()); };
-      plus.onclick  = () => { ui.dose = Math.min(MAX_MG, ui.dose+10); renderToday(compute()); };
-      dose.append(minus, out, plus); el.appendChild(dose);
+      const keepNote = () => { const n = $('todayNote'); ui.note = n ? n.value : ''; };
+      minus.onclick = () => { keepNote(); ui.dose = Math.max(10, ui.dose-10); renderToday(compute()); };
+      plus.onclick  = () => { keepNote(); ui.dose = Math.min(MAX_MG, ui.dose+10); renderToday(compute()); };
+      steps.append(minus, plus); box.append(v, steps); body.appendChild(box);
       if (c.currentDose && ui.dose !== c.currentDose){
-        const warn = document.createElement('div'); warn.className='small'; warn.style.color='var(--warn)';
-        warn.textContent = 'Attention : ta dose habituelle est de ' + fmt(c.currentDose,1) + ' mg.';
-        el.appendChild(warn);
+        const w = document.createElement('div'); w.className='dosewarn';
+        w.textContent = 'Ta dose habituelle est de ' + fmt(c.currentDose,1) + ' mg. Change-la seulement si ton dermato te l\'a dit.';
+        body.appendChild(w);
       }
-      const lab = document.createElement('label'); lab.textContent = 'Note (facultatif)';
-      const note = document.createElement('input'); note.type='text'; note.maxLength=140; note.id='todayNote'; note.placeholder='État de la peau, lèvres, repas…';
-      lab.appendChild(note); el.appendChild(lab);
-      const btn = document.createElement('button'); btn.type='button'; btn.className='primary take';
-      btn.textContent = 'J\'ai pris mes ' + fmt(ui.dose,1) + ' mg';
+      const note = document.createElement('input'); note.type='text'; note.maxLength=140; note.id='todayNote';
+      note.placeholder='Note : peau, lèvres, repas… (facultatif)'; note.setAttribute('aria-label','Note facultative');
+      note.value = ui.note || '';
+      body.appendChild(note);
+      const btn = document.createElement('button'); btn.type='button'; btn.className='capsule-btn';
+      btn.innerHTML = '<span><b></b></span>'; btn.querySelector('b').textContent = 'J\'ai pris mes ' + fmt(ui.dose,1) + ' mg';
       btn.onclick = () => {
         const n = note.value.trim();
         const e = { id: uid(), date: c.today, mg: ui.dose, note: ('Prise à ' + hhmm() + (n ? ' · ' + n : '')).slice(0,160) };
-        state.entries.push(e); sortEntries(); ui.selected = c.today; commit();
+        state.entries.push(e); sortEntries(); ui.selected = c.today; ui.note = ''; ui.justPopped = true; commit();
         toast('Prise de ' + fmt(e.mg,1) + ' mg enregistrée', () => { state.entries = state.entries.filter(x=>x.id!==e.id); commit(); });
       };
-      el.appendChild(btn);
+      body.appendChild(btn);
     }
 
-    if (c.first && c.remaining <= 0){
-      const g = document.createElement('div'); g.className='streak good';
-      g.textContent = 'Objectif cumulé atteint (' + fmt(c.pct,1) + ' %). Continue seulement selon les consignes de ton dermatologue.';
-      el.appendChild(g);
-    }
-    const st = document.createElement('div');
-    if (!c.first){ st.className='streak muted'; st.textContent = 'Enregistre ta première prise ou importe ta sauvegarde plus bas.'; }
-    else if (c.gap > 0){ st.className='streak bad'; st.textContent = c.gap + (c.gap>1?' jours':' jour') + ' sans prise. Reprends ce soir.'; }
-    else if (c.streak > 1){ st.className='streak good'; st.textContent = c.streak + ' jours d\'affilée' + (c.streak>=c.best && c.best>1 ? ' · ton record' : ' · record : ' + c.best + ' j'); }
-    else if (c.streak === 1){ st.className='streak good'; st.textContent = 'Série en cours : 1 jour. Continue demain.'; }
-    if (st.textContent) el.appendChild(st);
+    const chip = document.createElement('div');
+    if (c.first && c.remaining <= 0){ chip.className='chip good'; chip.textContent = 'Objectif cumulé atteint · vois ton dermato pour la suite'; }
+    else if (!c.first){ chip.className='chip neutral'; chip.textContent = 'Enregistre ta première prise ou importe ta sauvegarde'; }
+    else if (c.gap > 0){ chip.className='chip bad'; chip.textContent = c.gap + (c.gap>1?' jours':' jour') + ' sans prise · reprends ce soir'; }
+    else if (c.streak > 1){ chip.className='chip good'; chip.textContent = c.streak + ' jours d\'affilée' + (c.streak>=c.best ? ' · record' : ' · record ' + c.best + ' j'); }
+    else if (c.streak === 1){ chip.className='chip good'; chip.textContent = 'Série lancée · 1 jour'; }
+    if (chip.textContent) body.appendChild(chip);
   }
 
-  // ---------- rendu : progression & fin ----------
+  // ---------- rendu : plaquette & fin ----------
+  const PODS = 50;
   function buildBlister(){
-    const b=$('blister'); b.innerHTML='';
-    for(let i=0;i<100;i++){ const c=document.createElement('div'); c.className='cell'; c.appendChild(document.createElement('i')); b.appendChild(c); }
+    const b = $('pockets'); b.innerHTML='';
+    for (let i=0;i<PODS;i++){ const p=document.createElement('div'); p.className='pocket'; const cp=document.createElement('div'); cp.className='pill'; p.appendChild(cp); b.appendChild(p); }
   }
   function renderProgress(c){
-    $('total').innerHTML = fmt(c.total) + '<small>mg</small>';
-    $('of').textContent = 'sur ' + fmt(c.target) + ' mg (' + fmt(state.weightKg,1) + ' kg × ' + fmt(state.targetPerKg) + ' mg/kg)';
+    $('total').innerHTML = fmt(c.total) + '<small>mg pris</small>';
     $('pct').textContent = fmt(c.pct,1) + ' %';
-    $('barFill').style.width = Math.min(100,c.pct) + '%';
-    $('remain').textContent = c.remaining <= 0 ? 'Objectif atteint.' : 'Reste ' + fmt(c.remaining) + ' mg · ' + fmt(c.total/state.weightKg,1) + ' mg/kg cumulés';
-    const cells = $('blister').children;
-    for (let i=0;i<cells.length;i++) cells[i].firstChild.style.height = (Math.max(0,Math.min(1,c.pct-i))*100) + '%';
+    $('of').textContent = 'de ' + fmt(c.target) + ' mg';
+    $('meter').style.width = Math.min(100,c.pct) + '%';
+    $('remain').textContent = c.remaining <= 0 ? 'Objectif atteint' : 'Reste ' + fmt(c.remaining) + ' mg · ' + fmt(c.total/state.weightKg,1) + ' / ' + fmt(state.targetPerKg) + ' mg/kg';
+    $('podLegend').textContent = '1 gélule = ' + fmt(c.target/PODS) + ' mg';
+    const pods = $('pockets').children;
+    const used = c.pct/100*PODS;
+    const lastFull = Math.floor(used) - 1;
+    for (let i=0;i<pods.length;i++){
+      const p = pods[i], cap = p.firstChild;
+      const f = Math.max(0, Math.min(1, used - i));
+      p.classList.toggle('popped', f >= 1);
+      p.classList.toggle('just', !!ui.justPopped && i === lastFull);
+      cap.style.opacity = (f > 0 && f < 1) ? String(Math.max(.25, 1-f)) : '';
+      cap.style.display = f >= 1 && !(ui.justPopped && i === lastFull) ? 'none' : '';
+    }
+    ui.justPopped = false;
+    renderEta(c);
+  }
+  function renderEta(c){
+    const el = $('eta'); el.innerHTML='';
+    if (!c.first){ el.innerHTML = '<p class="empty">Ajoute une prise pour voir ta date de fin.</p>'; return; }
+    if (c.remaining <= 0){ el.innerHTML = '<p class="eta-head">Objectif atteint.</p><p class="muted">Ton dermatologue décide de la suite (arrêt ou prolongation).</p>'; return; }
+    const head = document.createElement('p'); head.className='eta-head';
+    head.innerHTML = 'Encore <em></em> prises de ' + fmt(c.currentDose,1) + '&nbsp;mg.';
+    head.querySelector('em').textContent = fmt(c.prisesLeft);
+    el.appendChild(head);
+    const sub = document.createElement('div'); sub.className='muted'; sub.style.fontSize='.9rem';
+    sub.textContent = 'Chaque soir sans oubli te rapproche directement de la fin.';
+    el.appendChild(sub);
 
-    const eta = $('eta');
-    if (!c.first) eta.innerHTML = '<p class="muted">Ajoute une prise pour voir la date de fin estimée.</p>';
-    else if (c.remaining <= 0) eta.innerHTML = '<div class="ideal"><b>Objectif atteint</b><div class="how">Vois avec ton dermatologue pour la suite.</div></div>';
-    else eta.innerHTML =
-      '<div class="ideal"><div class="k">Sans oubli</div><b>' + duration(c.idealDays+1) + '</b><div class="date">Fin le ' + fullDate(c.idealEnd) + '</div>' +
-      '<div class="how">Encore ' + fmt(c.prisesLeft) + ' prises de ' + fmt(c.currentDose,1) + ' mg</div></div>' +
-      '<div class="real"><div class="k">À ton rythme réel</div><b>' + duration(c.realDays+1) + '</b><div class="date">Fin le ' + fullDate(c.realEnd) + '</div>' +
-      '<div class="how">Tu as pris ta dose ' + fmt(c.adherence*100) + ' % des jours depuis le début</div></div>';
+    const axisEnd = c.realEnd > c.idealEnd ? c.realEnd : c.idealEnd;
+    const span = Math.max(1, dayDiff(c.first, axisEnd));
+    const pos = iso => Math.max(0, Math.min(100, dayDiff(c.first, iso)/span*100));
+    const tr = document.createElement('div'); tr.className='track'; tr.setAttribute('aria-hidden','true');
+    const pT = pos(c.today), pI = pos(c.idealEnd), pR = pos(c.realEnd);
+    tr.innerHTML =
+      '<div class="seg done" style="width:'+pT+'%"></div>' +
+      '<div class="seg ideal" style="left:'+pT+'%;width:'+Math.max(0,pI-pT)+'%"></div>' +
+      (pR>pI ? '<div class="seg real" style="left:'+pI+'%;width:'+(pR-pI)+'%"></div>' : '') +
+      '<div class="pin i" style="left:'+pI+'%"></div>' +
+      (pR>pI ? '<div class="pin r" style="left:'+pR+'%"></div>' : '') +
+      '<div class="pin today'+(pT<14?' l':pT>86?' rr':'')+'" style="left:'+pT+'%"></div>';
+    el.appendChild(tr);
+
+    const rows = document.createElement('div'); rows.className='eta-rows';
+    const row = (color, title, desc, when, whenSub) => {
+      const r = document.createElement('div'); r.className='eta-row';
+      const dot = document.createElement('i'); dot.className='dot'; dot.style.background = color;
+      const mid = document.createElement('div'); const b = document.createElement('b'); b.textContent = title; const s = document.createElement('span'); s.textContent = desc; mid.append(b, s);
+      const w = document.createElement('div'); w.className='when'; w.textContent = when; const ws = document.createElement('small'); ws.textContent = whenSub; w.appendChild(ws);
+      r.append(dot, mid, w); rows.appendChild(r);
+    };
+    row('var(--ink)', 'Début', 'Jour ' + (dayDiff(c.first,c.today)+1) + ' aujourd\'hui', fmtDate(c.first,{day:'numeric',month:'short',year:'numeric'}), fmt(c.pct,1) + ' % fait');
+    row('var(--ok)', 'Fin sans oubli', 'Une prise chaque soir dès maintenant', fmtDate(c.idealEnd,{day:'numeric',month:'short',year:'numeric'}), 'dans ' + duration(c.idealDays+1));
+    row('var(--miss)', 'Fin à ton rythme', 'Tu prends ta dose ' + fmt(c.adherence*100) + ' % des jours', fmtDate(c.realEnd,{day:'numeric',month:'short',year:'numeric'}), 'dans ' + duration(c.realDays+1));
+    el.appendChild(rows);
   }
 
   // ---------- rendu : calendrier ----------
@@ -576,14 +670,19 @@ details[open] summary{margin-bottom:12px}
     const h = document.createElement('h4'); h.className='cap'; h.textContent = longDate(iso); p.appendChild(h);
     const list = c.byDay[iso] || [];
     if (iso > c.today){
-      const t = document.createElement('div'); t.className='muted small';
+      const t = document.createElement('div'); t.className='muted';
       t.textContent = iso === c.idealEnd ? 'Date de fin estimée si tu ne rates aucune prise.' : 'Jour à venir.';
       p.appendChild(t); return;
     }
     if (!list.length){
       const t = document.createElement('div');
-      t.innerHTML = c.missed.has(iso) ? '<span class="tag miss">Oubli</span>' : (iso === c.today ? '<span class="tag ok">À prendre</span>' : '<span class="muted small">Avant le début du traitement.</span>');
+      t.innerHTML = c.missed.has(iso) ? '<span class="tag miss">Oubli</span>' : (iso === c.today ? '<span class="tag due">À prendre</span>' : '<span class="muted">Avant le début du traitement.</span>');
       p.appendChild(t);
+      if (iso === c.today){
+        const h2 = document.createElement('p'); h2.className='hint'; h2.style.margin='10px 0 0';
+        h2.textContent = 'Utilise le grand bouton en haut de la page pour enregistrer ta prise de ce soir.';
+        p.appendChild(h2); return;
+      }
     }
     list.forEach(e => {
       const r = document.createElement('div'); r.className='entry';
@@ -591,7 +690,7 @@ details[open] summary{margin-bottom:12px}
       const b = document.createElement('b'); b.textContent = fmt(e.mg,1)+' mg';
       t.appendChild(b);
       if (e.note){ const s=document.createElement('span'); s.textContent=' · '+e.note; t.appendChild(s); }
-      const del = document.createElement('button'); del.type='button'; del.className='ghost danger'; del.textContent='Supprimer';
+      const del = document.createElement('button'); del.type='button'; del.className='link danger'; del.textContent='Supprimer';
       del.setAttribute('aria-label','Supprimer la prise de '+fmt(e.mg,1)+' mg du '+longDate(iso));
       del.onclick = () => {
         state.entries = state.entries.filter(x=>x.id!==e.id); commit();
@@ -630,7 +729,7 @@ details[open] summary{margin-bottom:12px}
     const days = [];
     for (let d=dim; d>=1; d--){ const iso = ui.month+'-'+pad(d); if (c.byDay[iso] || c.missed.has(iso)) days.push(iso); }
     if (!days.length){ j.innerHTML = '<div class="empty small">Rien ce mois-ci pour l\'instant.</div>'; return; }
-    const h = document.createElement('h4'); h.className='muted small'; h.style.margin='0 0 6px'; h.textContent = 'Journal du mois'; j.appendChild(h);
+    const h = document.createElement('h4'); h.textContent = 'Journal du mois'; j.appendChild(h);
     days.forEach(iso => {
       const b = document.createElement('button'); b.type='button'; b.className='jrow' + (c.byDay[iso] ? '' : ' miss') + (iso===ui.selected ? ' sel' : '');
       const left = document.createElement('div');
@@ -651,27 +750,27 @@ details[open] summary{margin-bottom:12px}
   function renderStats(c){
     const avg = c.elapsed ? c.total/c.elapsed : 0;
     const stats = [
-      ['', fmt(c.total/state.weightKg,1)+' mg/kg', 'cumulés'],
-      ['', c.currentDose ? fmt(c.currentDose,1)+' mg' : '—', 'dose actuelle par jour'],
-      ['', c.first ? fmt(c.takenPast)+' / '+fmt(c.elapsed) : '—', 'jours avec prise'],
+      ['', fmt(c.total/state.weightKg,1), 'mg/kg cumulés'],
+      ['', c.currentDose ? fmt(c.currentDose,1)+' mg' : '—', 'dose actuelle / jour'],
+      ['', c.first ? fmt(c.takenPast)+'/'+fmt(c.elapsed) : '—', 'jours avec prise'],
       [c.missed.size ? 'bad' : '', fmt(c.missed.size), 'oublis depuis le début'],
       [c.streak>1 ? 'good' : '', fmt(c.streak)+' j', 'série en cours'],
       ['', fmt(c.best)+' j', 'meilleure série'],
-      ['', avg ? fmt(avg,1)+' mg/j' : '—', 'moyenne réelle, oublis compris'],
-      ['', c.first ? fullDate(c.first) : '—', 'début du traitement'],
+      ['', avg ? fmt(avg,1)+' mg' : '—', 'moyenne réelle / jour'],
+      ['', c.first ? fmtDate(c.first,{day:'numeric',month:'short'}) : '—', 'début de la cure'],
     ];
-    $('stats').innerHTML = stats.map(([cls,v,l])=>'<div class="stat '+cls+'"><b>'+v+'</b><span>'+l+'</span></div>').join('');
+    $('stats').innerHTML = stats.map(([cls,v,l])=>'<div class="fig '+cls+'"><b>'+v+'</b><span>'+l+'</span></div>').join('');
   }
   function renderBackup(){
     const el = $('backupInfo'); el.innerHTML='';
     const last = getLastBackup();
-    const p = document.createElement('p'); p.className='muted small';
+    const p = document.createElement('p'); p.className='hint';
     if (!last){
-      if (state.entries.length){ const a=document.createElement('div'); a.className='backup-alert'; a.textContent='Aucune sauvegarde téléchargée sur cet appareil. Fais-en une maintenant.'; el.appendChild(a); }
+      if (state.entries.length){ const a=document.createElement('div'); a.className='alert'; a.textContent='Aucune sauvegarde téléchargée sur cet appareil. Fais-en une maintenant.'; el.appendChild(a); }
       p.textContent = 'La sauvegarde contient tout : prises, notes, poids et objectif. Garde-la sur ton téléphone ou ton PC.';
     } else {
       const days = Math.floor((Date.now() - new Date(last).getTime())/86400000);
-      if (days >= 7 && state.entries.length){ const a=document.createElement('div'); a.className='backup-alert'; a.textContent='Dernière sauvegarde il y a ' + days + ' jours. Pense à en refaire une.'; el.appendChild(a); }
+      if (days >= 7 && state.entries.length){ const a=document.createElement('div'); a.className='alert'; a.textContent='Dernière sauvegarde il y a ' + days + ' jours. Pense à en refaire une.'; el.appendChild(a); }
       p.textContent = 'Dernière sauvegarde : ' + (days===0 ? 'aujourd\'hui' : days===1 ? 'hier' : 'il y a ' + days + ' jours') + '.';
     }
     el.appendChild(p);
@@ -830,7 +929,7 @@ details[open] summary{margin-bottom:12px}
   if (local) state = sanitize(local);
   buildBlister();
   render();
-  setStatus(local ? 'Enregistré sur cet appareil ✓' : 'Nouveau sur cet appareil');
+  setStatus(local ? 'Enregistré' : 'Nouvel appareil', !local);
   initBackend();
   // change de jour automatiquement (à 5 h) si la page reste ouverte
   let shownDay = intakeDay();
