@@ -3,166 +3,235 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#7A2232">
 <title>Suivi isotrétinoïne</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💊</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F5F6F7; --card:#FFFFFF; --ink:#1C2126; --muted:#5F6973; --line:#D9DDE1;
-  --foil:#E3E6E9; --foil-edge:#C9CED3; --capsule:#7A2232; --capsule-hi:#A3384B;
-  --ok:#2E7D5B; --ok-bg:#E3F2EA; --miss:#D32F2F; --miss-bg:#FDECEC; --warn:#9A6A12;
+  --paper:#F4F5F6; --card:#FFFFFF; --ink:#1C2126; --muted:#5F6973; --line:#DCE0E4;
+  --foil:#E3E6E9; --foil-edge:#C9CED3; --capsule:#7A2232; --capsule-hi:#A3384B; --on-capsule:#FFFFFF;
+  --ok:#2E7D5B; --ok-bg:#E4F3EB; --miss:#D32F2F; --miss-bg:#FDECEC; --warn:#9A6A12; --warn-bg:#FBF3E2;
   --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --body:"Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#15181B; --card:#1E2226; --ink:#ECEFF1; --muted:#9AA4AD; --line:#30363C;
-    --foil:#2A3035; --foil-edge:#3A4148; --capsule:#C24A5E; --capsule-hi:#E0687B;
-    --ok:#4FB386; --ok-bg:#183428; --miss:#FF6B6B; --miss-bg:#3A1C1E; --warn:#D9A441;
+    --paper:#131619; --card:#1C2024; --ink:#ECEFF1; --muted:#9AA4AD; --line:#2E343A;
+    --foil:#272D32; --foil-edge:#394047; --capsule:#C24A5E; --capsule-hi:#E0687B; --on-capsule:#FFFFFF;
+    --ok:#4FB386; --ok-bg:#16301F; --miss:#FF6B6B; --miss-bg:#381B1D; --warn:#D9A441; --warn-bg:#33291A;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#15181B; --card:#1E2226; --ink:#ECEFF1; --muted:#9AA4AD; --line:#30363C;
-  --foil:#2A3035; --foil-edge:#3A4148; --capsule:#C24A5E; --capsule-hi:#E0687B;
-  --ok:#4FB386; --ok-bg:#183428; --miss:#FF6B6B; --miss-bg:#3A1C1E; --warn:#D9A441;
+  --paper:#131619; --card:#1C2024; --ink:#ECEFF1; --muted:#9AA4AD; --line:#2E343A;
+  --foil:#272D32; --foil-edge:#394047; --capsule:#C24A5E; --capsule-hi:#E0687B; --on-capsule:#FFFFFF;
+  --ok:#4FB386; --ok-bg:#16301F; --miss:#FF6B6B; --miss-bg:#381B1D; --warn:#D9A441; --warn-bg:#33291A;
 }
 *{box-sizing:border-box}
+[hidden]{display:none !important}
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 var(--body)}
-main{max-width:760px;margin:0 auto;padding:28px 18px 64px}
-h1,h2{font-family:var(--display);font-weight:700;letter-spacing:-.01em;margin:0}
-h1{font-size:1.15rem;color:var(--muted);font-weight:500}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 var(--body);-webkit-tap-highlight-color:transparent}
+main{max-width:760px;margin:0 auto;padding:22px 16px 110px}
+h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.01em;margin:0}
+h1{font-size:1.05rem;color:var(--muted);font-weight:500}
 h2{font-size:1.2rem;margin-bottom:12px}
-section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:18px}
+section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:16px}
 .muted{color:var(--muted)}
 .small{font-size:.875rem}
-.red{color:var(--miss)}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.status{font-size:.8rem;color:var(--muted)}
+button{font:600 .95rem var(--body);border-radius:12px;padding:10px 16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;min-height:44px}
+button:disabled{opacity:.4;cursor:default}
+button.primary{background:var(--capsule);border-color:var(--capsule);color:var(--on-capsule)}
+button.ghost{background:none;border:none;color:var(--muted);padding:6px 8px;min-height:36px}
+button.danger{color:var(--miss)}
+input,select,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+textarea{min-height:110px;resize:vertical;font-size:.9rem}
+:focus-visible{outline:2px solid var(--capsule);outline-offset:2px}
+label{display:flex;flex-direction:column;gap:4px;font-size:.875rem;color:var(--muted);flex:1 1 140px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
 
-/* hero */
-.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center;margin-top:14px}
-@media (max-width:620px){.hero{grid-template-columns:1fr}}
-.total{font-family:var(--display);font-size:clamp(2.6rem,9vw,4rem);line-height:1;font-weight:700}
+/* ---- aujourd'hui ---- */
+.today{border:2px solid var(--capsule)}
+.today .when{font-family:var(--display);font-size:1.5rem;line-height:1.2}
+.cap::first-letter{text-transform:uppercase}
+.today .sub{color:var(--muted);font-size:.9rem;margin-top:2px}
+.dose{display:flex;align-items:center;gap:10px;margin:16px 0 12px}
+.dose button{width:48px;height:48px;padding:0;font-size:1.4rem;border-radius:50%}
+.dose output{font-family:var(--display);font-size:2rem;font-weight:700;min-width:110px;text-align:center}
+.take{width:100%;font-size:1.1rem;padding:16px;margin-top:12px}
+.done{display:flex;align-items:center;gap:14px;margin-top:14px;padding:14px;border-radius:12px;background:var(--ok-bg)}
+.done .tick{flex:none;width:44px;height:44px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700}
+.done b{display:block;font-size:1.05rem}
+.streak{margin-top:12px;font-size:.92rem;font-weight:600}
+.streak.good{color:var(--ok)}
+.streak.bad{color:var(--miss)}
+
+/* ---- progression ---- */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:center}
+@media (max-width:600px){.hero{grid-template-columns:1fr}.blister{max-width:280px;margin:0 auto;gap:4px;padding:10px}}
+.total{font-family:var(--display);font-size:clamp(2.5rem,10vw,3.8rem);line-height:1;font-weight:700}
 .total small{font-size:.38em;font-weight:500;color:var(--muted);margin-left:4px}
-.of{margin-top:6px;color:var(--muted)}
-.pct{font-family:var(--display);font-size:1.6rem;margin-top:14px}
+.of{margin-top:6px;color:var(--muted);font-size:.92rem}
+.pct{font-family:var(--display);font-size:1.5rem;margin-top:12px}
+.bar{height:8px;border-radius:99px;background:var(--foil);overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--capsule);width:0}
 .blister{background:var(--foil);border:1px solid var(--foil-edge);border-radius:16px;padding:12px;display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
 .cell{aspect-ratio:1/1.45;border-radius:999px;background:var(--paper);border:1px solid var(--foil-edge);position:relative;overflow:hidden}
 .cell i{position:absolute;inset:auto 0 0 0;background:linear-gradient(180deg,var(--capsule-hi),var(--capsule));height:0}
 .legend{margin-top:8px;text-align:center}
 
-/* end estimate */
-.eta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.eta div{border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-.eta b{display:block;font-family:var(--display);font-size:1.6rem;line-height:1.15}
-.eta .date{font-weight:600;margin-top:2px}
+/* ---- fin ---- */
+.eta{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.eta > div{border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.eta .k{font-size:.85rem;color:var(--muted);font-weight:600}
+.eta b{display:block;font-family:var(--display);font-size:1.55rem;line-height:1.2;margin-top:4px}
+.eta .date{font-weight:600}
 .eta .how{color:var(--muted);font-size:.85rem;margin-top:6px}
+.eta .ideal{border-color:var(--ok);background:var(--ok-bg)}
 .eta .real{border-color:var(--miss);background:var(--miss-bg)}
 
-/* stats */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px 20px}
-.stat b{display:block;font-family:var(--display);font-size:1.35rem;font-weight:700}
-.stat span{color:var(--muted);font-size:.875rem}
+/* ---- calendrier ---- */
+.calhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.calhead h3{font-size:1.15rem;text-align:center;flex:1}
+.calhead button{width:44px;padding:0;font-size:1.2rem}
+.monthsum{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-size:.85rem;color:var(--muted);margin-bottom:10px}
+.monthsum b{color:var(--ink)}
+.monthsum .m b{color:var(--miss)}
+.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:460px;margin:0 auto}
+.calhead,.monthsum,.keys{max-width:460px;margin-left:auto;margin-right:auto}
+.wd{font-size:.72rem;color:var(--muted);text-align:center;padding-bottom:2px}
+.dcell{aspect-ratio:1;min-height:0;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font:600 .82rem var(--body);color:var(--muted);background:var(--paper);border:1px solid transparent;padding:0;line-height:1.1}
+.dcell small{font-size:.6rem;font-weight:500;opacity:.9}
+.dcell.taken{background:var(--ok);color:#fff}
+.dcell.missed{background:var(--miss);color:#fff}
+.dcell.pending{background:var(--card);color:var(--ink);border:2px dashed var(--capsule)}
+.dcell.future,.dcell.before{opacity:.45}
+.dcell.goal{border:2px solid var(--ok);color:var(--ok);opacity:1}
+.dcell.sel{box-shadow:0 0 0 3px var(--ink)}
+.keys{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:.8rem;color:var(--muted)}
+.keys span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--k);border:var(--b,none)}
+
+.daypanel{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
+.daypanel h4{margin:0 0 8px;font:700 1rem var(--body)}
+.entry{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.entry:last-of-type{border-bottom:none}
+.entry .t{font-size:.92rem}
+.entry .t b{font-family:var(--display)}
+.entry .t span{color:var(--muted)}
+.tag{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:99px}
+.tag.miss{background:var(--miss-bg);color:var(--miss)}
+.tag.ok{background:var(--ok-bg);color:var(--ok)}
+.addday{margin-top:10px}
+.addday .row label{flex:1 1 110px}
+.addday .row label.notefield{flex:3 1 200px}
+
+.journal{margin-top:16px}
+.jrow{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;border:none;border-radius:10px;background:none;padding:9px 10px;min-height:0;font-weight:400;align-items:flex-start}
+.jrow + .jrow{margin-top:2px}
+.jrow .d{display:block;font-weight:600;font-size:.9rem}
+.jrow .n{color:var(--muted);font-size:.85rem;display:block;overflow-wrap:anywhere}
+.jrow .s{font-family:var(--display);font-weight:700;white-space:nowrap}
+.jrow.miss{background:var(--miss-bg)}
+.jrow.miss .d,.jrow.miss .s{color:var(--miss)}
+.jrow.sel{outline:2px solid var(--ink);outline-offset:-2px}
+
+/* ---- stats ---- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px 18px}
+.stat b{display:block;font-family:var(--display);font-size:1.3rem;font-weight:700}
+.stat span{color:var(--muted);font-size:.85rem}
 .stat.bad b{color:var(--miss)}
+.stat.good b{color:var(--ok)}
 
-/* calendar */
-.months{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
-.month h3{font:600 .95rem var(--body);margin:0 0 6px;text-transform:capitalize}
-.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-.grid7 .wd{font-size:.7rem;color:var(--muted);text-align:center}
-.dcell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--muted);background:var(--paper)}
-.dcell.taken{background:var(--ok);color:#fff;font-weight:600}
-.dcell.missed{background:var(--miss);color:#fff;font-weight:600}
-.dcell.today{outline:2px solid var(--ink);outline-offset:-2px}
-.dcell.pending{background:var(--paper);color:var(--ink);font-weight:600}
-.keys{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:.85rem;color:var(--muted)}
-.keys span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--k)}
-
-/* forms */
-form,.row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
-label{display:flex;flex-direction:column;gap:4px;font-size:.875rem;color:var(--muted);flex:1 1 140px}
-input,select,textarea{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
-textarea{min-height:120px;resize:vertical;font-size:.9rem}
-input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--capsule);outline-offset:2px}
-button{font:600 .95rem var(--body);border-radius:10px;padding:10px 16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
-button.primary{background:var(--capsule);border-color:var(--capsule);color:#fff}
-button.ghost{background:none;border:none;color:var(--muted);padding:6px 8px}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
-.chips button{padding:6px 12px;font-weight:500}
+/* ---- sauvegarde ---- */
+.backup-alert{background:var(--warn-bg);border-radius:10px;padding:10px 12px;color:var(--warn);font-weight:600;font-size:.9rem;margin-bottom:12px}
 .hidden-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 .msg{margin-top:10px;font-size:.9rem}
-
-/* history */
-.day{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
-.day:first-child{border-top:none}
-.day .d{font-weight:600}
-.day ul{list-style:none;margin:4px 0 0;padding:0}
-.day li{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:.9rem}
-.day .sum{font-family:var(--display);font-weight:700;white-space:nowrap}
-.day.missed{background:var(--miss-bg);border-radius:8px;padding:8px 10px;border-top-color:transparent;margin:2px 0}
-.day.missed .d,.day.missed .sum{color:var(--miss)}
-.empty{color:var(--muted);padding:8px 0}
-details summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:1.2rem}
+details summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:1.1rem;min-height:28px}
 details[open] summary{margin-bottom:12px}
 .preview{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-top:10px;font-size:.9rem}
-.note{border-left:3px solid var(--warn);padding:2px 0 2px 12px;color:var(--muted);font-size:.875rem;margin-top:18px}
-.status{font-size:.8rem;color:var(--muted);margin-top:4px}
-@media (prefers-reduced-motion:no-preference){.cell i{transition:height .5s ease}}
+.note{border-left:3px solid var(--warn);padding:2px 0 2px 12px;color:var(--muted);font-size:.85rem;margin-top:18px}
+.empty{color:var(--muted);padding:6px 0}
+
+/* ---- toast ---- */
+.toastwrap{position:fixed;left:0;right:0;bottom:0;padding:0 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;pointer-events:none;z-index:10}
+.toast{pointer-events:auto;background:var(--ink);color:var(--paper);border-radius:12px;padding:10px 10px 10px 16px;display:flex;align-items:center;gap:12px;max-width:520px;width:100%;box-shadow:0 8px 24px rgba(0,0,0,.25);font-size:.92rem}
+.toast[hidden]{display:none}
+.toast span{flex:1}
+.toast button{background:none;border:1px solid currentColor;color:inherit;min-height:36px;padding:6px 12px}
+@media (prefers-reduced-motion:no-preference){
+  .cell i,.bar i{transition:height .5s ease,width .5s ease}
+  .toast{animation:up .2s ease}
+  @keyframes up{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+}
 </style>
 </head>
 <body>
 <main>
-  <h1>Cure d'isotrétinoïne · dose cumulée</h1>
-  <div class="status" id="status">Chargement…</div>
-
-  <div class="hero">
-    <div>
-      <div class="total" id="total">0<small>mg</small></div>
-      <div class="of" id="of"></div>
-      <div class="pct" id="pct">0 %</div>
-      <div class="muted small" id="remain"></div>
-    </div>
-    <div>
-      <div class="blister" id="blister" aria-hidden="true"></div>
-      <div class="legend muted small">Chaque alvéole = 1 % de l'objectif</div>
-    </div>
+  <div class="top">
+    <h1>Cure d'isotrétinoïne</h1>
+    <div class="status" id="status" role="status">Chargement…</div>
   </div>
 
+  <!-- AUJOURD'HUI -->
+  <section class="today" id="todayCard" aria-live="polite"></section>
+
+  <!-- PROGRESSION -->
   <section>
-    <h2>Ajouter une prise</h2>
-    <form id="addForm">
-      <label>Date<input type="date" id="fDate" required></label>
-      <label>Dose (mg)<input type="number" id="fMg" min="1" step="any" inputmode="decimal" required></label>
-      <label style="flex-basis:100%">Note (facultatif)<input type="text" id="fNote" maxlength="120" placeholder="ex. prise à 22h avec le dîner"></label>
-      <button class="primary" type="submit">Ajouter la prise</button>
-    </form>
-    <div class="chips" id="chips"></div>
+    <div class="hero">
+      <div>
+        <div class="total" id="total">0<small>mg</small></div>
+        <div class="of" id="of"></div>
+        <div class="pct" id="pct">0 %</div>
+        <div class="bar"><i id="barFill"></i></div>
+        <div class="muted small" id="remain" style="margin-top:6px"></div>
+      </div>
+      <div>
+        <div class="blister" id="blister" aria-hidden="true"></div>
+        <div class="legend muted small">Chaque alvéole = 1 % de l'objectif</div>
+      </div>
+    </div>
   </section>
 
+  <!-- FIN -->
   <section>
     <h2>Fin du traitement</h2>
     <div class="eta" id="eta"></div>
   </section>
 
-  <section>
-    <h2>Où tu en es</h2>
-    <div class="stats" id="stats"></div>
-  </section>
-
-  <section>
+  <!-- CALENDRIER -->
+  <section id="calSection">
     <h2>Calendrier</h2>
-    <div class="months" id="calendar"></div>
+    <div class="calhead">
+      <button type="button" id="prevM" aria-label="Mois précédent">‹</button>
+      <h3 id="monthTitle" class="cap"></h3>
+      <button type="button" id="nextM" aria-label="Mois suivant">›</button>
+    </div>
+    <div class="monthsum" id="monthSum"></div>
+    <div class="grid7" id="calGrid"></div>
     <div class="keys">
       <span style="--k:var(--ok)">Prise</span>
       <span style="--k:var(--miss)">Oubli</span>
-      <span style="--k:var(--paper);">Aujourd'hui (encadré)</span>
+      <span style="--k:var(--card);--b:2px dashed var(--capsule)">À prendre</span>
+      <span style="--k:transparent;--b:2px solid var(--ok)">Fin estimée</span>
     </div>
+    <div class="daypanel" id="dayPanel"></div>
+    <div class="journal" id="journal"></div>
   </section>
 
+  <!-- STATS -->
+  <section>
+    <h2>Statistiques</h2>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <!-- SAUVEGARDE -->
   <section>
     <h2>Sauvegarde</h2>
-    <p class="muted small">La sauvegarde contient tout : prises, notes, poids et objectif. Garde-la au chaud et réimporte-la sur un autre appareil ou navigateur.</p>
+    <div id="backupInfo"></div>
     <div class="row">
       <button type="button" class="primary" id="saveBtn">Télécharger la sauvegarde</button>
       <button type="button" id="loadBtn">Importer une sauvegarde</button>
@@ -171,11 +240,12 @@ details[open] summary{margin-bottom:12px}
     <div class="msg" id="saveMsg" role="status"></div>
   </section>
 
+  <!-- RÉGLAGES -->
   <section>
     <h2>Réglages</h2>
     <div class="row">
-      <label>Poids (kg)<input type="number" id="sWeight" min="30" max="250" step="0.1"></label>
-      <label>Objectif (mg/kg)
+      <label>Poids (kg)<input type="number" id="sWeight" min="30" max="250" step="0.1" inputmode="decimal"></label>
+      <label>Objectif cumulé
         <select id="sTarget">
           <option value="120">120 mg/kg</option>
           <option value="135">135 mg/kg</option>
@@ -183,23 +253,18 @@ details[open] summary{margin-bottom:12px}
           <option value="custom">Autre…</option>
         </select>
       </label>
-      <label id="customWrap" hidden>Valeur perso (mg/kg)<input type="number" id="sCustom" min="1" step="1"></label>
+      <label id="customWrap" hidden>Valeur perso (mg/kg)<input type="number" id="sCustom" min="1" max="400" step="1" inputmode="numeric"></label>
     </div>
     <p class="muted small" id="targetExplain"></p>
+    <p class="muted small">Une prise faite entre minuit et 5 h compte pour la veille (ex. prise à 0 h 30 = prise du soir précédent).</p>
   </section>
 
+  <!-- IMPORT TEXTE -->
   <section>
-    <h2>Historique</h2>
-    <div id="history"></div>
-  </section>
-
-  <section>
-    <details id="importBox">
+    <details>
       <summary>Importer depuis un fichier texte</summary>
       <p class="muted small">Choisis ton ACCUTANE.txt ou colle son contenu. Une prise = une ligne qui commence par une date et contient une dose en mg (ex. « 12/09/2026 = 30MG … »). Les lignes « OUBLIE », les totaux et les analyses sont ignorés, et les doublons ne sont pas réimportés.</p>
-      <div class="row">
-        <label>Fichier .txt<input type="file" id="iFile" accept=".txt,.csv,text/plain,text/csv"></label>
-      </div>
+      <label>Fichier .txt<input type="file" id="iFile" accept=".txt,.csv,text/plain,text/csv"></label>
       <label style="margin-top:10px">Ou colle le texte<textarea id="iText" placeholder="12/09/2026 = 30MG PRISE A 22H00"></textarea></label>
       <div class="row" style="margin-top:10px">
         <button type="button" id="iParse">Analyser</button>
@@ -210,322 +275,488 @@ details[open] summary{margin-bottom:12px}
   </section>
 
   <section>
-    <div class="row">
-      <button type="button" class="ghost" id="wipeBtn">Tout effacer</button>
-    </div>
+    <button type="button" class="ghost danger" id="wipeBtn">Tout effacer</button>
   </section>
 
   <p class="note">Repère indicatif : l'objectif cumulé et la dose quotidienne sont fixés par ton dermatologue. Ne modifie pas ton traitement à partir de ce compteur.</p>
 </main>
 
+<div class="toastwrap"><div class="toast" id="toast" role="status" hidden><span id="toastText"></span><button type="button" id="toastUndo">Annuler</button></div></div>
+
 <script>
 (function(){
+  'use strict';
   const $ = id => document.getElementById(id);
   const STORE_KEY = 'accutane-tracker-v1';
+  const BACKUP_KEY = 'accutane-last-backup';
   const SAVE_APP = 'accutane-tracker';
-  let state = { weightKg: 74, targetPerKg: 150, entries: [] };
-  let backend = null;
-  let saveTimer = null;
+  const CUTOFF_HOUR = 5;
+  const MAX_MG = 200;
 
-  // ---------- utils ----------
-  const fmt = (n, d=0) => Number(n).toLocaleString('fr-FR',{maximumFractionDigits:d, minimumFractionDigits:0});
-  const toISO = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-  const todayISO = () => toISO(new Date());
-  const parseISO = s => { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); };
+  let state = { weightKg: 74, targetPerKg: 150, entries: [] };
+  let backend = null, saveTimer = null, downloads = null;
+  let ui = { month: null, selected: null, dose: null };
+
+  // ---------- dates ----------
+  const pad = n => String(n).padStart(2,'0');
+  const toISO = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+  const parseISO = s => { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d,12); }; // midi : insensible aux changements d'heure
   const dayDiff = (a,b) => Math.round((parseISO(b)-parseISO(a))/86400000);
-  const addDays = (s,n) => { const d=parseISO(s); d.setDate(d.getDate()+n); return d; };
-  const longDate = s => parseISO(s).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
-  const shortDate = d => d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+  const addDaysISO = (s,n) => { const d=parseISO(s); d.setDate(d.getDate()+n); return toISO(d); };
+  // Jour de prise : avant 5 h on est encore sur la journée de la veille
+  function intakeDay(){ const d=new Date(); if (d.getHours()<CUTOFF_HOUR) d.setDate(d.getDate()-1); return toISO(d); }
+  const monthKey = s => s.slice(0,7);
+  const addMonths = (key,n) => { const [y,m]=key.split('-').map(Number); const d=new Date(y,m-1+n,1,12); return d.getFullYear()+'-'+pad(d.getMonth()+1); };
+  const fmtDate = (s,opt) => parseISO(s).toLocaleDateString('fr-FR',opt);
+  const longDate = s => fmtDate(s,{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const medDate = s => fmtDate(s,{weekday:'short',day:'numeric',month:'short'});
+  const fullDate = s => fmtDate(s,{day:'numeric',month:'long',year:'numeric'});
+  const fmt = (n,d=0) => Number(n).toLocaleString('fr-FR',{maximumFractionDigits:d,minimumFractionDigits:0});
   const uid = () => Math.random().toString(36).slice(2,10)+Date.now().toString(36);
+  const hhmm = () => { const d=new Date(); return pad(d.getHours())+'h'+pad(d.getMinutes()); };
   function duration(days){
     if (days <= 0) return 'Terminé';
-    const months = Math.floor(days / 30.44);
-    const rest = Math.round(days - months*30.44);
-    if (months === 0) return days + ' jours';
+    if (days < 31) return days + (days>1?' jours':' jour');
+    const months = Math.floor(days/30.44), rest = Math.round(days - months*30.44);
     return months + ' mois' + (rest ? ' et ' + rest + ' j' : '');
   }
 
-  // ---------- persistence ----------
+  // ---------- stockage ----------
   function localLoad(){ try{ const r=localStorage.getItem(STORE_KEY); return r?JSON.parse(r):null; }catch(e){ return null; } }
-  function localSave(s){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(s)); }catch(e){} }
-  function setStatus(t){ $('status').textContent = t; }
+  function localSave(s){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(s)); return true; }catch(e){ return false; } }
+  function getLastBackup(){ try{ return localStorage.getItem(BACKUP_KEY); }catch(e){ return null; } }
+  function setLastBackup(){ try{ localStorage.setItem(BACKUP_KEY, new Date().toISOString()); }catch(e){} }
+  const setStatus = t => { $('status').textContent = t; };
 
-  function queueSave(){
+  function persist(){
     clearTimeout(saveTimer);
     saveTimer = setTimeout(async () => {
-      localSave(state);
+      const ok = localSave(state);
       if (backend){
-        try{ await backend.save(state); setStatus('Synchronisé avec ton compte'); }
-        catch(e){ setStatus('Enregistré dans ce navigateur'); }
-      } else setStatus('Enregistré dans ce navigateur');
-    }, 300);
+        try{ await backend.save(state); setStatus('Synchronisé ✓'); return; }catch(e){}
+      }
+      setStatus(ok ? 'Enregistré sur cet appareil ✓' : 'Impossible d\'enregistrer : fais une sauvegarde');
+    }, 250);
   }
 
   function sanitize(s){
     const out = { weightKg: 74, targetPerKg: 150, entries: [] };
-    if (s && typeof s === 'object'){
-      if (Number(s.weightKg) > 0) out.weightKg = Number(s.weightKg);
-      if (Number(s.targetPerKg) > 0) out.targetPerKg = Number(s.targetPerKg);
-      if (Array.isArray(s.entries)) out.entries = s.entries
-        .filter(e => e && /^\d{4}-\d{2}-\d{2}$/.test(e.date) && Number(e.mg) > 0)
-        .map(e => ({ id: String(e.id||uid()), date: e.date, mg: Number(e.mg), note: String(e.note||'').slice(0,120) }))
+    if (!s || typeof s !== 'object') return out;
+    const w = Number(s.weightKg), t = Number(s.targetPerKg);
+    if (w >= 30 && w <= 250) out.weightKg = w;
+    if (t > 0 && t <= 400) out.targetPerKg = t;
+    if (Array.isArray(s.entries)){
+      const seen = new Set();
+      out.entries = s.entries
+        .filter(e => e && /^\d{4}-\d{2}-\d{2}$/.test(e.date) && Number(e.mg) > 0 && Number(e.mg) <= MAX_MG)
+        .map(e => ({ id: String(e.id||uid()), date: e.date, mg: Number(e.mg), note: String(e.note||'').slice(0,160) }))
+        .filter(e => { if (seen.has(e.id)) return false; seen.add(e.id); return true; })
         .sort((a,b)=>a.date.localeCompare(b.date));
     }
     return out;
   }
 
   async function initBackend(){
-    const local = localLoad();
-    if (local){ state = sanitize(local); render(); }
-    setStatus('Enregistré dans ce navigateur');
-    if (!window.claude || !window.claude.use) return;
+    if (!window.claude || typeof window.claude.use !== 'function') return;
     try{
+      window.claude.use('downloads').then(d => { downloads = d; }).catch(()=>{});
       const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
       if (!db || !user) return;
-      const id = await user.id();
-      if (!id) return;
+      const id = await user.id(); if (!id) return;
       const ref = db.doc('data/users/' + id + '/accutane');
       const snap = await ref.get();
       if (snap.exists){ state = sanitize(snap.data()); localSave(state); }
       else if (state.entries.length){ await ref.set(JSON.parse(JSON.stringify(state))); }
       backend = { save: s => ref.set(JSON.parse(JSON.stringify(s))) };
-      setStatus('Synchronisé avec ton compte');
+      setStatus('Synchronisé ✓');
       render();
     }catch(e){}
   }
 
-  // ---------- calculations ----------
+  // ---------- calculs ----------
   function compute(){
-    const today = todayISO();
+    const today = intakeDay();
+    const byDay = {};
+    state.entries.forEach(e => (byDay[e.date] ||= []).push(e));
+    const dates = Object.keys(byDay).sort();
+    const first = dates[0] || null, last = dates[dates.length-1] || null;
     const total = state.entries.reduce((a,e)=>a+e.mg,0);
-    const target = state.weightKg * state.targetPerKg;
+    const target = Math.round(state.weightKg * state.targetPerKg);
     const pct = target ? total/target*100 : 0;
-    const takenSet = new Set(state.entries.map(e=>e.date));
-    const dates = [...takenSet].sort();
-    const first = dates[0], last = dates[dates.length-1];
     const remaining = Math.max(0, target-total);
+    const tookToday = !!byDay[today];
 
-    // Jours oubliés : du début jusqu'à hier (aujourd'hui n'est pas encore un oubli)
-    const missed = [];
+    // jours écoulés et oublis : du 1er jour jusqu'à hier (ou aujourd'hui si déjà pris)
+    const missed = new Set();
     let elapsed = 0;
-    if (first){
-      const end = takenSet.has(today) ? today : toISO(addDays(today,-1));
-      const n = dayDiff(first, end);
-      for (let i=0;i<=n;i++){
-        const d = toISO(addDays(first,i));
+    if (first && first <= today){
+      const end = tookToday ? today : addDaysISO(today,-1);
+      for (let d = first; d <= end; d = addDaysISO(d,1)){
         elapsed++;
-        if (!takenSet.has(d)) missed.push(d);
+        if (!byDay[d]) missed.add(d);
       }
     }
-    const takenDays = dates.length;
-    const adherence = elapsed ? takenDays/elapsed : 1;
+    const takenPast = dates.filter(d => d <= today).length;
+    const adherence = elapsed ? Math.min(1, takenPast/elapsed) : 1;
 
-    const currentDose = last ? state.entries.filter(e=>e.date===last).reduce((a,e)=>a+e.mg,0) : 0;
+    // séries
+    let streak = 0;
+    for (let d = tookToday ? today : addDaysISO(today,-1); byDay[d]; d = addDaysISO(d,-1)) streak++;
+    let best = 0, run = 0, prev = null;
+    dates.forEach(d => { run = (prev && dayDiff(prev,d)===1) ? run+1 : 1; best = Math.max(best,run); prev = d; });
+    const gap = (last && !tookToday && last < today) ? dayDiff(last,today)-1 : 0;
+
+    // dose actuelle = total du dernier jour de prise
+    const currentDose = last ? byDay[last].reduce((a,e)=>a+e.mg,0) : 0;
     const prisesLeft = currentDose>0 ? Math.ceil(remaining/currentDose) : null;
-    const tookToday = takenSet.has(today);
-    // Sans oubli : prochaine prise aujourd'hui si pas encore prise, sinon demain
-    const startOffset = tookToday ? 1 : 0;
-    const idealDays = prisesLeft!==null ? (prisesLeft ? prisesLeft - 1 + startOffset : 0) : null;
-    const idealEnd = idealDays!==null ? addDays(today, idealDays) : null;
-    // À ton rythme réel : même nombre de prises, étalées selon ton taux de prise
-    const realDays = (prisesLeft!==null && adherence>0) ? (prisesLeft ? Math.ceil((prisesLeft - 1 + startOffset) / adherence) : 0) : null;
-    const realEnd = realDays!==null ? addDays(today, realDays) : null;
-
-    let streakOff = 0;
-    if (last && !tookToday) streakOff = dayDiff(last, today) - 1;
-
-    const totalSpan = first ? dayDiff(first, today) + 1 : 0;
-    const avg = elapsed ? total/elapsed : 0;
-    return { today, total, target, pct, takenSet, dates, first, last, remaining, missed, elapsed, takenDays, adherence,
-             currentDose, prisesLeft, idealDays, idealEnd, realDays, realEnd, tookToday, streakOff, avg, totalSpan };
+    // sans oubli : 1re prise restante ce soir (sinon demain si déjà faite)
+    const offset = tookToday ? 1 : 0;
+    let idealDays = null, idealEnd = null, realDays = null, realEnd = null;
+    if (prisesLeft){
+      idealDays = prisesLeft - 1 + offset;
+      idealEnd = addDaysISO(today, idealDays);
+      const rate = Math.max(adherence, 0.05);
+      realDays = Math.ceil((prisesLeft - 1) / rate) + offset;
+      realEnd = addDaysISO(today, realDays);
+    }
+    return { today, byDay, dates, first, last, total, target, pct, remaining, tookToday, missed, elapsed, takenPast,
+             adherence, streak, best, gap, currentDose, prisesLeft, idealDays, idealEnd, realDays, realEnd };
   }
 
-  // ---------- render ----------
+  // ---------- rendu : aujourd'hui ----------
+  function renderToday(c){
+    const el = $('todayCard'); el.innerHTML = '';
+    const head = document.createElement('div');
+    const w = document.createElement('div'); w.className='when cap'; w.textContent = longDate(c.today).replace(/ \d{4}$/,''); head.appendChild(w);
+    const sub = document.createElement('div'); sub.className='sub';
+    const now = new Date();
+    sub.textContent = now.getHours() < CUTOFF_HOUR ? 'Il est ' + hhmm() + ' : ta prise compte encore pour cette journée.' : 'Ta prise du jour';
+    head.appendChild(sub); el.appendChild(head);
+
+    if (c.tookToday){
+      const list = c.byDay[c.today];
+      const done = document.createElement('div'); done.className='done';
+      const tick = document.createElement('div'); tick.className='tick'; tick.textContent='✓';
+      const txt = document.createElement('div');
+      const b = document.createElement('b'); b.textContent = 'Prise faite · ' + fmt(list.reduce((a,e)=>a+e.mg,0),1) + ' mg';
+      const s = document.createElement('span'); s.className='muted small'; s.textContent = list.map(e=>e.note).filter(Boolean).join(' · ') || 'Bien joué, à demain.';
+      txt.append(b, s); done.append(tick, txt); el.appendChild(done);
+      const undo = document.createElement('button'); undo.type='button'; undo.className='ghost'; undo.style.marginTop='8px';
+      undo.textContent = 'Annuler la prise d\'aujourd\'hui';
+      undo.onclick = () => {
+        if (!confirm('Supprimer ta prise d\'aujourd\'hui ?')) return;
+        const removed = state.entries.filter(e=>e.date===c.today);
+        state.entries = state.entries.filter(e=>e.date!==c.today);
+        commit(); toast('Prise d\'aujourd\'hui supprimée', () => { state.entries.push(...removed); sortEntries(); commit(); });
+      };
+      el.appendChild(undo);
+    } else {
+      if (ui.dose === null) ui.dose = c.currentDose || 20;
+      const dose = document.createElement('div'); dose.className='dose';
+      const minus = document.createElement('button'); minus.type='button'; minus.textContent='−'; minus.setAttribute('aria-label','Diminuer la dose de 10 mg');
+      const out = document.createElement('output'); out.textContent = fmt(ui.dose,1)+' mg'; out.setAttribute('aria-live','polite');
+      const plus = document.createElement('button'); plus.type='button'; plus.textContent='+'; plus.setAttribute('aria-label','Augmenter la dose de 10 mg');
+      minus.disabled = ui.dose <= 10; plus.disabled = ui.dose >= MAX_MG;
+      minus.onclick = () => { ui.dose = Math.max(10, ui.dose-10); renderToday(compute()); };
+      plus.onclick  = () => { ui.dose = Math.min(MAX_MG, ui.dose+10); renderToday(compute()); };
+      dose.append(minus, out, plus); el.appendChild(dose);
+      if (c.currentDose && ui.dose !== c.currentDose){
+        const warn = document.createElement('div'); warn.className='small'; warn.style.color='var(--warn)';
+        warn.textContent = 'Attention : ta dose habituelle est de ' + fmt(c.currentDose,1) + ' mg.';
+        el.appendChild(warn);
+      }
+      const lab = document.createElement('label'); lab.textContent = 'Note (facultatif)';
+      const note = document.createElement('input'); note.type='text'; note.maxLength=140; note.id='todayNote'; note.placeholder='État de la peau, lèvres, repas…';
+      lab.appendChild(note); el.appendChild(lab);
+      const btn = document.createElement('button'); btn.type='button'; btn.className='primary take';
+      btn.textContent = 'J\'ai pris mes ' + fmt(ui.dose,1) + ' mg';
+      btn.onclick = () => {
+        const n = note.value.trim();
+        const e = { id: uid(), date: c.today, mg: ui.dose, note: ('Prise à ' + hhmm() + (n ? ' · ' + n : '')).slice(0,160) };
+        state.entries.push(e); sortEntries(); ui.selected = c.today; commit();
+        toast('Prise de ' + fmt(e.mg,1) + ' mg enregistrée', () => { state.entries = state.entries.filter(x=>x.id!==e.id); commit(); });
+      };
+      el.appendChild(btn);
+    }
+
+    if (c.first && c.remaining <= 0){
+      const g = document.createElement('div'); g.className='streak good';
+      g.textContent = 'Objectif cumulé atteint (' + fmt(c.pct,1) + ' %). Continue seulement selon les consignes de ton dermatologue.';
+      el.appendChild(g);
+    }
+    const st = document.createElement('div');
+    if (!c.first){ st.className='streak muted'; st.textContent = 'Enregistre ta première prise ou importe ta sauvegarde plus bas.'; }
+    else if (c.gap > 0){ st.className='streak bad'; st.textContent = c.gap + (c.gap>1?' jours':' jour') + ' sans prise. Reprends ce soir.'; }
+    else if (c.streak > 1){ st.className='streak good'; st.textContent = c.streak + ' jours d\'affilée' + (c.streak>=c.best && c.best>1 ? ' · ton record' : ' · record : ' + c.best + ' j'); }
+    else if (c.streak === 1){ st.className='streak good'; st.textContent = 'Série en cours : 1 jour. Continue demain.'; }
+    if (st.textContent) el.appendChild(st);
+  }
+
+  // ---------- rendu : progression & fin ----------
   function buildBlister(){
     const b=$('blister'); b.innerHTML='';
     for(let i=0;i<100;i++){ const c=document.createElement('div'); c.className='cell'; c.appendChild(document.createElement('i')); b.appendChild(c); }
   }
+  function renderProgress(c){
+    $('total').innerHTML = fmt(c.total) + '<small>mg</small>';
+    $('of').textContent = 'sur ' + fmt(c.target) + ' mg (' + fmt(state.weightKg,1) + ' kg × ' + fmt(state.targetPerKg) + ' mg/kg)';
+    $('pct').textContent = fmt(c.pct,1) + ' %';
+    $('barFill').style.width = Math.min(100,c.pct) + '%';
+    $('remain').textContent = c.remaining <= 0 ? 'Objectif atteint.' : 'Reste ' + fmt(c.remaining) + ' mg · ' + fmt(c.total/state.weightKg,1) + ' mg/kg cumulés';
+    const cells = $('blister').children;
+    for (let i=0;i<cells.length;i++) cells[i].firstChild.style.height = (Math.max(0,Math.min(1,c.pct-i))*100) + '%';
 
+    const eta = $('eta');
+    if (!c.first) eta.innerHTML = '<p class="muted">Ajoute une prise pour voir la date de fin estimée.</p>';
+    else if (c.remaining <= 0) eta.innerHTML = '<div class="ideal"><b>Objectif atteint</b><div class="how">Vois avec ton dermatologue pour la suite.</div></div>';
+    else eta.innerHTML =
+      '<div class="ideal"><div class="k">Sans oubli</div><b>' + duration(c.idealDays+1) + '</b><div class="date">Fin le ' + fullDate(c.idealEnd) + '</div>' +
+      '<div class="how">Encore ' + fmt(c.prisesLeft) + ' prises de ' + fmt(c.currentDose,1) + ' mg</div></div>' +
+      '<div class="real"><div class="k">À ton rythme réel</div><b>' + duration(c.realDays+1) + '</b><div class="date">Fin le ' + fullDate(c.realEnd) + '</div>' +
+      '<div class="how">Tu as pris ta dose ' + fmt(c.adherence*100) + ' % des jours depuis le début</div></div>';
+  }
+
+  // ---------- rendu : calendrier ----------
+  function monthBounds(c){
+    const min = monthKey(c.first || c.today);
+    let max = monthKey(c.today);
+    if (c.idealEnd && monthKey(c.idealEnd) > max) max = monthKey(c.idealEnd);
+    return { min, max };
+  }
   function renderCalendar(c){
-    const cal = $('calendar'); cal.innerHTML='';
-    if (!c.first){ cal.innerHTML = '<div class="empty">Le calendrier apparaîtra après ta première prise.</div>'; return; }
-    const missedSet = new Set(c.missed);
-    const start = parseISO(c.first); start.setDate(1);
-    const endM = parseISO(c.today); endM.setDate(1);
-    const wds = ['L','M','M','J','V','S','D'];
-    for (let m = new Date(start); m <= endM; m.setMonth(m.getMonth()+1)){
-      const box = document.createElement('div'); box.className='month';
-      const h = document.createElement('h3'); h.textContent = m.toLocaleDateString('fr-FR',{month:'long',year:'numeric'}); box.appendChild(h);
-      const g = document.createElement('div'); g.className='grid7';
-      wds.forEach(w=>{ const x=document.createElement('div'); x.className='wd'; x.textContent=w; g.appendChild(x); });
-      const offset = (m.getDay()+6)%7;
-      for (let i=0;i<offset;i++) g.appendChild(document.createElement('div'));
-      const dim = new Date(m.getFullYear(), m.getMonth()+1, 0).getDate();
-      for (let d=1; d<=dim; d++){
-        const iso = toISO(new Date(m.getFullYear(), m.getMonth(), d));
-        const cell = document.createElement('div'); cell.className='dcell'; cell.textContent=d;
-        let label = '';
-        if (c.takenSet.has(iso)){ cell.classList.add('taken'); label='prise'; }
-        else if (missedSet.has(iso)){ cell.classList.add('missed'); label='oubli'; }
-        else if (iso === c.today){ cell.classList.add('pending'); label='à prendre'; }
-        if (iso === c.today) cell.classList.add('today');
-        cell.title = parseISO(iso).toLocaleDateString('fr-FR') + (label ? ' : '+label : '');
-        g.appendChild(cell);
-      }
-      box.appendChild(g); cal.appendChild(box);
+    const { min, max } = monthBounds(c);
+    if (!ui.month) ui.month = monthKey(c.today);
+    if (ui.month < min) ui.month = min;
+    if (ui.month > max) ui.month = max;
+    if (!ui.selected) ui.selected = c.today;
+    $('prevM').disabled = ui.month <= min;
+    $('nextM').disabled = ui.month >= max;
+    const [y,m] = ui.month.split('-').map(Number);
+    $('monthTitle').textContent = new Date(y,m-1,1,12).toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+
+    // résumé du mois
+    let mg=0, taken=0, miss=0;
+    const dim = new Date(y,m,0).getDate();
+    for (let d=1; d<=dim; d++){
+      const iso = ui.month+'-'+pad(d);
+      if (c.byDay[iso]){ taken++; mg += c.byDay[iso].reduce((a,e)=>a+e.mg,0); }
+      else if (c.missed.has(iso)) miss++;
     }
+    $('monthSum').innerHTML = '<span><b>' + taken + '</b> prises</span><span class="m"><b>' + miss + '</b> oublis</span><span><b>' + fmt(mg) + '</b> mg</span>';
+
+    const g = $('calGrid'); g.innerHTML='';
+    ['L','M','M','J','V','S','D'].forEach(w=>{ const x=document.createElement('div'); x.className='wd'; x.textContent=w; g.appendChild(x); });
+    const offset = (new Date(y,m-1,1,12).getDay()+6)%7;
+    for (let i=0;i<offset;i++) g.appendChild(document.createElement('div'));
+    for (let d=1; d<=dim; d++){
+      const iso = ui.month+'-'+pad(d);
+      const b = document.createElement('button'); b.type='button'; b.className='dcell';
+      let label;
+      const num = document.createElement('span'); num.textContent = d; b.appendChild(num);
+      if (c.byDay[iso]){ b.classList.add('taken'); const s=document.createElement('small'); s.textContent=fmt(c.byDay[iso].reduce((a,e)=>a+e.mg,0),1); b.appendChild(s); label='prise'; }
+      else if (c.missed.has(iso)){ b.classList.add('missed'); label='oubli'; }
+      else if (iso === c.today){ b.classList.add('pending'); label='à prendre'; }
+      else if (iso > c.today){ b.classList.add('future'); label='à venir'; }
+      else { b.classList.add('before'); label='avant le début'; }
+      if (c.idealEnd && iso === c.idealEnd){ b.classList.add('goal'); label += ', fin estimée'; }
+      if (iso === ui.selected) b.classList.add('sel');
+      b.setAttribute('aria-label', longDate(iso) + ' : ' + label);
+      b.setAttribute('aria-pressed', iso === ui.selected ? 'true' : 'false');
+      b.onclick = () => { ui.selected = iso; renderCalendar(compute()); };
+      g.appendChild(b);
+    }
+    renderDayPanel(c);
+    renderJournal(c);
+  }
+
+  function renderDayPanel(c){
+    const p = $('dayPanel'); p.innerHTML='';
+    const iso = ui.selected; if (!iso) return;
+    if (monthKey(iso) !== ui.month){ return; }
+    const h = document.createElement('h4'); h.className='cap'; h.textContent = longDate(iso); p.appendChild(h);
+    const list = c.byDay[iso] || [];
+    if (iso > c.today){
+      const t = document.createElement('div'); t.className='muted small';
+      t.textContent = iso === c.idealEnd ? 'Date de fin estimée si tu ne rates aucune prise.' : 'Jour à venir.';
+      p.appendChild(t); return;
+    }
+    if (!list.length){
+      const t = document.createElement('div');
+      t.innerHTML = c.missed.has(iso) ? '<span class="tag miss">Oubli</span>' : (iso === c.today ? '<span class="tag ok">À prendre</span>' : '<span class="muted small">Avant le début du traitement.</span>');
+      p.appendChild(t);
+    }
+    list.forEach(e => {
+      const r = document.createElement('div'); r.className='entry';
+      const t = document.createElement('div'); t.className='t';
+      const b = document.createElement('b'); b.textContent = fmt(e.mg,1)+' mg';
+      t.appendChild(b);
+      if (e.note){ const s=document.createElement('span'); s.textContent=' · '+e.note; t.appendChild(s); }
+      const del = document.createElement('button'); del.type='button'; del.className='ghost danger'; del.textContent='Supprimer';
+      del.setAttribute('aria-label','Supprimer la prise de '+fmt(e.mg,1)+' mg du '+longDate(iso));
+      del.onclick = () => {
+        state.entries = state.entries.filter(x=>x.id!==e.id); commit();
+        toast('Prise supprimée', () => { state.entries.push(e); sortEntries(); commit(); });
+      };
+      r.append(t, del); p.appendChild(r);
+    });
+    // ajout pour ce jour
+    const add = document.createElement('div'); add.className='addday';
+    const row = document.createElement('div'); row.className='row';
+    const l1 = document.createElement('label'); l1.textContent = list.length ? 'Ajouter une dose' : 'Ajouter la prise';
+    // dose proposée = celle du dernier jour de prise avant cette date (sinon la dose actuelle)
+    const prevDay = c.dates.filter(x => x < iso).pop();
+    const suggested = prevDay ? c.byDay[prevDay].reduce((a,e)=>a+e.mg,0) : (c.currentDose || 20);
+    const mg = document.createElement('input'); mg.type='number'; mg.min='1'; mg.max=String(MAX_MG); mg.step='any'; mg.inputMode='decimal'; mg.value = suggested;
+    l1.appendChild(mg);
+    const l2 = document.createElement('label'); l2.className='notefield'; l2.textContent='Note';
+    const nt = document.createElement('input'); nt.type='text'; nt.maxLength=140; nt.placeholder='facultatif';
+    l2.appendChild(nt);
+    const go = document.createElement('button'); go.type='button'; go.textContent='Ajouter';
+    go.onclick = () => {
+      const v = parseFloat(String(mg.value).replace(',','.'));
+      if (!(v>0 && v<=MAX_MG)){ mg.focus(); toast('Dose invalide : entre 1 et ' + MAX_MG + ' mg'); return; }
+      if (list.length && !confirm('Il y a déjà ' + fmt(list.reduce((a,e)=>a+e.mg,0),1) + ' mg ce jour-là. Ajouter ' + fmt(v,1) + ' mg en plus ?')) return;
+      const e = { id: uid(), date: iso, mg: v, note: nt.value.trim().slice(0,160) };
+      state.entries.push(e); sortEntries(); commit();
+      toast('Prise ajoutée au ' + medDate(iso), () => { state.entries = state.entries.filter(x=>x.id!==e.id); commit(); });
+    };
+    row.append(l1, l2, go); add.appendChild(row); p.appendChild(add);
+  }
+
+  function renderJournal(c){
+    const j = $('journal'); j.innerHTML='';
+    const [y,m] = ui.month.split('-').map(Number);
+    const dim = new Date(y,m,0).getDate();
+    const days = [];
+    for (let d=dim; d>=1; d--){ const iso = ui.month+'-'+pad(d); if (c.byDay[iso] || c.missed.has(iso)) days.push(iso); }
+    if (!days.length){ j.innerHTML = '<div class="empty small">Rien ce mois-ci pour l\'instant.</div>'; return; }
+    const h = document.createElement('h4'); h.className='muted small'; h.style.margin='0 0 6px'; h.textContent = 'Journal du mois'; j.appendChild(h);
+    days.forEach(iso => {
+      const b = document.createElement('button'); b.type='button'; b.className='jrow' + (c.byDay[iso] ? '' : ' miss') + (iso===ui.selected ? ' sel' : '');
+      const left = document.createElement('div');
+      const d = document.createElement('span'); d.className='d cap'; d.textContent = medDate(iso); left.appendChild(d);
+      const s = document.createElement('span'); s.className='s';
+      if (c.byDay[iso]){
+        const notes = c.byDay[iso].map(e=>e.note).filter(Boolean).join(' · ');
+        if (notes){ const n=document.createElement('span'); n.className='n'; n.textContent=notes; left.appendChild(n); }
+        s.textContent = fmt(c.byDay[iso].reduce((a,e)=>a+e.mg,0),1)+' mg';
+      } else s.textContent = 'Oubli';
+      b.append(left, s);
+      b.onclick = () => { ui.selected = iso; renderCalendar(compute()); $('calGrid').scrollIntoView({behavior:'smooth',block:'nearest'}); };
+      j.appendChild(b);
+    });
+  }
+
+  // ---------- rendu : stats, sauvegarde, réglages ----------
+  function renderStats(c){
+    const avg = c.elapsed ? c.total/c.elapsed : 0;
+    const stats = [
+      ['', fmt(c.total/state.weightKg,1)+' mg/kg', 'cumulés'],
+      ['', c.currentDose ? fmt(c.currentDose,1)+' mg' : '—', 'dose actuelle par jour'],
+      ['', c.first ? fmt(c.takenPast)+' / '+fmt(c.elapsed) : '—', 'jours avec prise'],
+      [c.missed.size ? 'bad' : '', fmt(c.missed.size), 'oublis depuis le début'],
+      [c.streak>1 ? 'good' : '', fmt(c.streak)+' j', 'série en cours'],
+      ['', fmt(c.best)+' j', 'meilleure série'],
+      ['', avg ? fmt(avg,1)+' mg/j' : '—', 'moyenne réelle, oublis compris'],
+      ['', c.first ? fullDate(c.first) : '—', 'début du traitement'],
+    ];
+    $('stats').innerHTML = stats.map(([cls,v,l])=>'<div class="stat '+cls+'"><b>'+v+'</b><span>'+l+'</span></div>').join('');
+  }
+  function renderBackup(){
+    const el = $('backupInfo'); el.innerHTML='';
+    const last = getLastBackup();
+    const p = document.createElement('p'); p.className='muted small';
+    if (!last){
+      if (state.entries.length){ const a=document.createElement('div'); a.className='backup-alert'; a.textContent='Aucune sauvegarde téléchargée sur cet appareil. Fais-en une maintenant.'; el.appendChild(a); }
+      p.textContent = 'La sauvegarde contient tout : prises, notes, poids et objectif. Garde-la sur ton téléphone ou ton PC.';
+    } else {
+      const days = Math.floor((Date.now() - new Date(last).getTime())/86400000);
+      if (days >= 7 && state.entries.length){ const a=document.createElement('div'); a.className='backup-alert'; a.textContent='Dernière sauvegarde il y a ' + days + ' jours. Pense à en refaire une.'; el.appendChild(a); }
+      p.textContent = 'Dernière sauvegarde : ' + (days===0 ? 'aujourd\'hui' : days===1 ? 'hier' : 'il y a ' + days + ' jours') + '.';
+    }
+    el.appendChild(p);
+  }
+  function renderSettings(){
+    if (document.activeElement !== $('sWeight')) $('sWeight').value = state.weightKg;
+    const preset = ['120','135','150'].includes(String(state.targetPerKg));
+    if (document.activeElement !== $('sTarget')) $('sTarget').value = preset ? String(state.targetPerKg) : 'custom';
+    $('customWrap').hidden = preset && $('sTarget').value !== 'custom';
+    if (!preset && document.activeElement !== $('sCustom')) $('sCustom').value = state.targetPerKg;
+    const w = state.weightKg;
+    $('targetExplain').textContent = 'À ' + fmt(w,1) + ' kg : 120 mg/kg = ' + fmt(w*120) + ' mg · 135 mg/kg = ' + fmt(w*135) + ' mg · 150 mg/kg = ' + fmt(w*150) + ' mg. La taille n\'entre pas dans le calcul, seul le poids compte.';
   }
 
   function render(){
     const c = compute();
-    $('total').innerHTML = fmt(c.total) + '<small>mg</small>';
-    $('of').textContent = 'sur un objectif de ' + fmt(c.target) + ' mg (' + fmt(state.weightKg,1) + ' kg × ' + fmt(state.targetPerKg) + ' mg/kg)';
-    $('pct').textContent = fmt(Math.min(c.pct,999),1) + ' %';
-    $('remain').textContent = (c.total >= c.target && c.target) ? 'Objectif atteint.' : 'Reste ' + fmt(c.remaining) + ' mg';
-
-    const cells = $('blister').children;
-    for (let i=0;i<cells.length;i++){
-      const fill = Math.max(0, Math.min(1, c.pct - i));
-      cells[i].firstChild.style.height = (fill*100) + '%';
-    }
-
-    // ETA
-    const eta = $('eta');
-    if (!c.first){
-      eta.innerHTML = '<p class="muted">Ajoute une prise ou importe ta sauvegarde pour voir la date de fin estimée.</p>';
-    } else if (c.remaining <= 0){
-      eta.innerHTML = '<div><b>Objectif atteint</b><div class="how">Vois avec ton dermatologue pour la suite.</div></div>';
-    } else {
-      eta.innerHTML =
-        '<div><b>' + duration(c.idealDays+1) + '</b>' +
-        '<div class="date">Fin le ' + shortDate(c.idealEnd) + '</div>' +
-        '<div class="how">Sans oubli : encore ' + fmt(c.prisesLeft) + ' prises de ' + fmt(c.currentDose,1) + ' mg</div></div>' +
-        '<div class="real"><b>' + duration(c.realDays+1) + '</b>' +
-        '<div class="date">Fin le ' + shortDate(c.realEnd) + '</div>' +
-        '<div class="how">À ton rythme actuel : tu prends ta dose ' + fmt(c.adherence*100) + ' % des jours</div></div>';
-    }
-
-    // Stats
-    const perKg = state.weightKg ? c.total/state.weightKg : 0;
-    const stats = [
-      ['', fmt(perKg,1)+' mg/kg', 'cumulés à ce jour'],
-      ['', c.currentDose ? fmt(c.currentDose,1)+' mg/j' : '—', 'dose actuelle'],
-      ['', c.first ? fmt(c.takenDays)+' / '+fmt(c.elapsed) : '—', c.first ? 'jours avec prise depuis le '+parseISO(c.first).toLocaleDateString('fr-FR') : 'jours avec prise'],
-      [c.missed.length ? 'bad' : '', fmt(c.missed.length), 'oublis depuis le début'],
-      [c.streakOff>0 ? 'bad' : '', !c.last ? '—' : (c.tookToday ? 'Prise faite' : (c.streakOff>0 ? fmt(c.streakOff)+' j' : 'À prendre')), !c.last ? 'aujourd\'hui' : (c.tookToday ? 'aujourd\'hui' : (c.streakOff>0 ? 'sans prise d\'affilée' : 'aujourd\'hui'))],
-      ['', c.avg ? fmt(c.avg,1)+' mg/j' : '—', 'moyenne réelle, oublis compris'],
-    ];
-    $('stats').innerHTML = stats.map(([cls,v,l])=>'<div class="stat '+cls+'"><b>'+v+'</b><span>'+l+'</span></div>').join('');
-
-    renderCalendar(c);
-
-    // Réglages
-    $('sWeight').value = state.weightKg;
-    const preset = ['120','135','150'].includes(String(state.targetPerKg));
-    $('sTarget').value = preset ? String(state.targetPerKg) : 'custom';
-    $('customWrap').hidden = preset;
-    if (!preset) $('sCustom').value = state.targetPerKg;
-    $('targetExplain').textContent =
-      'À ' + fmt(state.weightKg,1) + ' kg : 120 mg/kg = ' + fmt(state.weightKg*120) + ' mg · 135 mg/kg = ' + fmt(state.weightKg*135) + ' mg · 150 mg/kg = ' + fmt(state.weightKg*150) + ' mg. La taille n\'entre pas dans le calcul, seul le poids compte.';
-
-    // Boutons rapides
-    const used = [...new Set(state.entries.slice().reverse().map(e=>e.mg))].slice(0,3);
-    const chipVals = used.length ? used : [20,30,40];
-    $('chips').innerHTML = chipVals.map(v=>'<button type="button" data-mg="'+v+'">'+fmt(v,1)+' mg aujourd\'hui</button>').join('');
-
-    // Historique (oublis en rouge)
-    const h = $('history'); h.innerHTML='';
-    if (!c.first){
-      h.innerHTML = '<div class="empty">Aucune prise pour l\'instant. Importe ta sauvegarde ou ajoute ta première dose.</div>';
-      return;
-    }
-    const byDay = {};
-    state.entries.forEach(e => (byDay[e.date] ||= []).push(e));
-    const allDays = [...new Set([...Object.keys(byDay), ...c.missed])].sort().reverse();
-    allDays.forEach(d => {
-      const row = document.createElement('div');
-      const left = document.createElement('div');
-      const dl = document.createElement('div'); dl.className='d'; dl.textContent = longDate(d); left.appendChild(dl);
-      const s = document.createElement('div'); s.className='sum';
-      if (!byDay[d]){
-        row.className = 'day missed';
-        s.textContent = 'Oubli';
-      } else {
-        row.className = 'day';
-        const ul = document.createElement('ul');
-        byDay[d].forEach(e => {
-          const li = document.createElement('li');
-          const t = document.createElement('span'); t.textContent = fmt(e.mg,1)+' mg' + (e.note ? ' · '+e.note : '');
-          const del = document.createElement('button'); del.className='ghost'; del.type='button'; del.textContent='Supprimer';
-          del.setAttribute('aria-label','Supprimer la prise de '+fmt(e.mg,1)+' mg du '+longDate(d));
-          del.onclick = () => { if (confirm('Supprimer cette prise ?')){ state.entries = state.entries.filter(x=>x.id!==e.id); render(); queueSave(); } };
-          li.append(t, del); ul.appendChild(li);
-        });
-        left.appendChild(ul);
-        s.textContent = fmt(byDay[d].reduce((a,e)=>a+e.mg,0),1)+' mg';
-      }
-      row.append(left, s); h.appendChild(row);
-    });
+    renderToday(c); renderProgress(c); renderCalendar(c); renderStats(c); renderBackup(); renderSettings();
   }
+  function sortEntries(){ state.entries.sort((a,b)=>a.date.localeCompare(b.date)); }
+  function commit(){ ui.dose = null; render(); persist(); }
 
-  // ---------- actions ----------
-  function addEntry(date, mg, note){
-    state.entries.push({ id: uid(), date, mg: Number(mg), note: note||'' });
-    state.entries.sort((a,b)=>a.date.localeCompare(b.date));
-    render(); queueSave();
+  // ---------- toast ----------
+  let toastTimer = null, toastUndo = null;
+  function toast(text, undo){
+    $('toastText').textContent = text;
+    toastUndo = undo || null;
+    $('toastUndo').hidden = !undo;
+    $('toast').hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { $('toast').hidden = true; toastUndo = null; }, 6000);
   }
-  $('addForm').addEventListener('submit', ev => {
-    ev.preventDefault();
-    const mg = parseFloat(String($('fMg').value).replace(',','.'));
-    if (!(mg>0) || !$('fDate').value) return;
-    addEntry($('fDate').value, mg, $('fNote').value.trim());
-    $('fNote').value='';
+  $('toastUndo').onclick = () => { const f = toastUndo; toastUndo = null; $('toast').hidden = true; if (f) f(); };
+
+  // ---------- navigation calendrier ----------
+  $('prevM').onclick = () => { ui.month = addMonths(ui.month,-1); renderCalendar(compute()); };
+  $('nextM').onclick = () => { ui.month = addMonths(ui.month,1); renderCalendar(compute()); };
+
+  // ---------- réglages ----------
+  $('sWeight').addEventListener('change', () => {
+    const w = parseFloat(String($('sWeight').value).replace(',','.'));
+    if (w>=30 && w<=250){ state.weightKg = w; commit(); } else { toast('Poids invalide : entre 30 et 250 kg'); renderSettings(); }
   });
-  $('chips').addEventListener('click', ev => {
-    const b = ev.target.closest('button[data-mg]'); if (!b) return;
-    addEntry(todayISO(), Number(b.dataset.mg), '');
-  });
-  $('sWeight').addEventListener('change', () => { const w = parseFloat($('sWeight').value); if (w>0){ state.weightKg = w; render(); queueSave(); } });
   $('sTarget').addEventListener('change', () => {
     const v = $('sTarget').value;
     if (v==='custom'){ $('customWrap').hidden=false; $('sCustom').focus(); return; }
-    state.targetPerKg = Number(v); render(); queueSave();
+    state.targetPerKg = Number(v); commit();
   });
-  $('sCustom').addEventListener('change', () => { const v = parseFloat($('sCustom').value); if (v>0){ state.targetPerKg = v; render(); queueSave(); } });
+  $('sCustom').addEventListener('change', () => {
+    const v = parseFloat($('sCustom').value);
+    if (v>0 && v<=400){ state.targetPerKg = v; commit(); } else toast('Valeur invalide');
+  });
 
-  // ---------- sauvegarde / import de sauvegarde ----------
-  let downloads = null;
+  // ---------- sauvegarde ----------
   async function downloadFile(filename, text, mime){
-    if (downloads){
-      try{ await downloads.save({ filename, data: text }); return true; }catch(e){ return false; }
-    }
-    const blob = new Blob([text], { type: mime });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = filename;
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    return true;
+    if (downloads){ try{ await downloads.save({ filename, data: text }); return true; }catch(e){ return false; } }
+    try{
+      const blob = new Blob([text], { type: mime });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+      return true;
+    }catch(e){ return false; }
   }
-  $('saveBtn').addEventListener('click', async () => {
-    const payload = { app: SAVE_APP, version: 1, exportedAt: new Date().toISOString(),
-      weightKg: state.weightKg, targetPerKg: state.targetPerKg, entries: state.entries };
-    const ok = await downloadFile('accutane-sauvegarde-' + todayISO() + '.json', JSON.stringify(payload, null, 2), 'application/json');
-    $('saveMsg').textContent = ok ? 'Sauvegarde téléchargée (' + state.entries.length + ' prises).' : 'Téléchargement annulé.';
-  });
-  $('loadBtn').addEventListener('click', () => $('loadFile').click());
+  $('saveBtn').onclick = async () => {
+    const payload = { app: SAVE_APP, version: 1, exportedAt: new Date().toISOString(), weightKg: state.weightKg, targetPerKg: state.targetPerKg, entries: state.entries };
+    const ok = await downloadFile('accutane-sauvegarde-' + intakeDay() + '.json', JSON.stringify(payload, null, 2), 'application/json');
+    if (ok){ setLastBackup(); renderBackup(); }
+    $('saveMsg').textContent = ok ? 'Sauvegarde téléchargée : ' + state.entries.length + ' prises.' : 'Téléchargement annulé.';
+  };
+  $('loadBtn').onclick = () => $('loadFile').click();
   $('loadFile').addEventListener('change', () => {
     const f = $('loadFile').files[0]; if (!f) return;
     const r = new FileReader();
     r.onload = () => {
       let data;
-      try{ data = JSON.parse(r.result); }catch(e){ $('saveMsg').textContent = 'Ce fichier n\'est pas une sauvegarde valide (JSON illisible).'; return; }
+      try{ data = JSON.parse(String(r.result).replace(/^\ufeff/,'')); }catch(e){ $('saveMsg').textContent = 'Ce fichier n\'est pas une sauvegarde valide.'; return; }
       if (!data || !Array.isArray(data.entries)){ $('saveMsg').textContent = 'Ce fichier n\'est pas une sauvegarde de ce site.'; return; }
       const next = sanitize(data);
-      const msg = 'Remplacer tes données actuelles (' + state.entries.length + ' prises) par la sauvegarde (' + next.entries.length + ' prises, ' + fmt(next.entries.reduce((a,e)=>a+e.mg,0)) + ' mg) ?';
-      if (state.entries.length && !confirm(msg)) { $('saveMsg').textContent = 'Import annulé.'; return; }
-      state = next; render(); queueSave();
+      if (state.entries.length && !confirm('Remplacer tes données actuelles (' + state.entries.length + ' prises) par la sauvegarde (' + next.entries.length + ' prises, ' + fmt(next.entries.reduce((a,e)=>a+e.mg,0)) + ' mg) ?')){ $('saveMsg').textContent = 'Import annulé.'; return; }
+      const before = state;
+      state = next; ui.month = null; ui.selected = null; commit();
       $('saveMsg').textContent = 'Sauvegarde importée : ' + next.entries.length + ' prises.';
+      toast('Sauvegarde importée', () => { state = before; commit(); $('saveMsg').textContent = 'Import annulé.'; });
     };
+    r.onerror = () => { $('saveMsg').textContent = 'Lecture du fichier impossible.'; };
     r.readAsText(f, 'utf-8');
     $('loadFile').value = '';
   });
@@ -534,12 +765,7 @@ details[open] summary{margin-bottom:12px}
   const MONTHS = {janv:1,jan:1,fevr:2,fev:2,feb:2,mars:3,mar:3,avr:4,apr:4,mai:5,may:5,juin:6,jun:6,juil:7,jul:7,aout:8,aug:8,sept:9,sep:9,oct:10,nov:11,dec:12};
   const strip = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
   function guessYear(m,d){ const now=new Date(); let y=now.getFullYear(); if (new Date(y,m-1,d) > new Date(now.getTime()+86400000)) y--; return y; }
-  function iso(y,m,d){
-    if (y<100) y+=2000;
-    if (m<1||m>12||d<1||d>31) return null;
-    const dt = new Date(y,m-1,d); if (dt.getMonth()!==m-1) return null;
-    return toISO(dt);
-  }
+  function iso(y,m,d){ if (y<100) y+=2000; if (m<1||m>12||d<1||d>31) return null; const dt=new Date(y,m-1,d,12); if (dt.getMonth()!==m-1) return null; return toISO(dt); }
   function findDate(line){
     let m; const l = strip(line);
     if ((m = l.match(/(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/))) return { date: iso(+m[1],+m[2],+m[3]), raw: m[0] };
@@ -549,10 +775,10 @@ details[open] summary{margin-bottom:12px}
   }
   function parseText(txt){
     const out = [];
-    txt.split(/\r?\n/).forEach(rawLine => {
+    String(txt).replace(/^\ufeff/,'').split(/\r?\n/).forEach(rawLine => {
       const line = rawLine.trim(); if (!line) return;
       const csv = line.match(/^(\d{4}-\d{2}-\d{2});(\d+(?:[.,]\d+)?);(.*)$/);
-      if (csv){ const v=parseFloat(csv[2].replace(',','.')); if (v>0&&v<=200) out.push({ date: csv[1], mg: v, note: csv[3].replace(/^"|"$/g,'').replace(/""/g,'"').slice(0,120) }); return; }
+      if (csv){ const v=parseFloat(csv[2].replace(',','.')); if (v>0&&v<=MAX_MG) out.push({ date: csv[1], mg: v, note: csv[3].replace(/^"|"$/g,'').replace(/""/g,'"').slice(0,160) }); return; }
       const l = strip(line);
       if (/oubli/.test(l)) return;
       const d = findDate(line);
@@ -561,20 +787,18 @@ details[open] summary{margin-bottom:12px}
       const m = rest.match(/(\d+(?:[.,]\d+)?)\s*mg\b/i);
       if (!m) return;
       const mg = parseFloat(m[1].replace(',','.'));
-      if (!(mg > 0 && mg <= 200)) return;
-      const note = rest.replace(m[0], ' ').replace(/^[\s=:\-]+/, '').replace(/\s+/g,' ').trim().slice(0,120);
+      if (!(mg > 0 && mg <= MAX_MG)) return;
+      const note = rest.replace(m[0], ' ').replace(/^[\s=:\-]+/, '').replace(/\s+/g,' ').trim().slice(0,160);
       out.push({ date: d.date, mg, note });
     });
     return out;
   }
   let pending = [];
   function showPreview(){
-    const p = $('iPreview'); p.hidden = false;
+    const p = $('iPreview'); p.hidden = false; p.innerHTML = '';
     if (!pending.length){ p.textContent = 'Aucune prise reconnue. Chaque ligne doit commencer par une date et contenir une dose (ex. « 12/09/2026 = 30MG »).'; $('iDo').hidden = true; return; }
-    const tot = pending.reduce((a,e)=>a+e.mg,0);
-    p.innerHTML = '';
-    const head = document.createElement('div'); head.innerHTML = '<b>'+pending.length+' prises reconnues, '+fmt(tot)+' mg au total</b>'; p.appendChild(head);
-    pending.forEach(e => { const r=document.createElement('div'); r.className='muted'; r.textContent = parseISO(e.date).toLocaleDateString('fr-FR')+' : '+fmt(e.mg,1)+' mg'; p.appendChild(r); });
+    const head = document.createElement('b'); head.textContent = pending.length+' prises reconnues, '+fmt(pending.reduce((a,e)=>a+e.mg,0))+' mg au total'; p.appendChild(head);
+    pending.forEach(e => { const r=document.createElement('div'); r.className='muted'; r.textContent = fmtDate(e.date,{day:'2-digit',month:'2-digit',year:'numeric'})+' : '+fmt(e.mg,1)+' mg'; p.appendChild(r); });
     $('iDo').hidden = false; $('iDo').textContent = 'Importer ' + pending.length + ' prises';
   }
   $('iFile').addEventListener('change', () => {
@@ -583,31 +807,35 @@ details[open] summary{margin-bottom:12px}
     r.onload = () => { $('iText').value = r.result; pending = parseText(r.result); showPreview(); };
     r.readAsText(f, 'utf-8');
   });
-  $('iParse').addEventListener('click', () => { pending = parseText($('iText').value); showPreview(); });
-  $('iDo').addEventListener('click', () => {
+  $('iParse').onclick = () => { pending = parseText($('iText').value); showPreview(); };
+  $('iDo').onclick = () => {
     const keys = new Set(state.entries.map(e=>e.date+'|'+e.mg));
     let added = 0;
     pending.forEach(e => { const k=e.date+'|'+e.mg; if (!keys.has(k)){ state.entries.push({ id: uid(), ...e }); keys.add(k); added++; } });
-    state.entries.sort((a,b)=>a.date.localeCompare(b.date));
+    sortEntries();
     $('iPreview').textContent = added + ' prises importées' + (pending.length-added ? ' (' + (pending.length-added) + ' doublons ignorés).' : '.');
-    $('iDo').hidden = true; pending = [];
-    render(); queueSave();
-  });
+    $('iDo').hidden = true; pending = []; ui.month = null; commit();
+  };
 
-  $('wipeBtn').addEventListener('click', () => {
+  $('wipeBtn').onclick = () => {
     if (!state.entries.length) return;
-    if (confirm('Effacer toutes les prises enregistrées ? Pense à télécharger une sauvegarde avant. Cette action est définitive.')){ state.entries = []; render(); queueSave(); }
-  });
+    if (!confirm('Effacer toutes les prises ? Télécharge une sauvegarde avant si tu veux pouvoir les récupérer.')) return;
+    const before = state.entries;
+    state.entries = []; ui.month = null; commit();
+    toast('Toutes les prises ont été effacées', () => { state.entries = before; commit(); });
+  };
 
   // ---------- démarrage ----------
-  $('fDate').value = todayISO();
+  const local = localLoad();
+  if (local) state = sanitize(local);
   buildBlister();
   render();
+  setStatus(local ? 'Enregistré sur cet appareil ✓' : 'Nouveau sur cet appareil');
   initBackend();
-  if (window.claude && window.claude.use){ window.claude.use('downloads').then(d => { downloads = d; }).catch(()=>{}); }
-  // Recalcule à minuit si la page reste ouverte
-  setInterval(() => { if ($('fDate').dataset.day !== todayISO()){ $('fDate').dataset.day = todayISO(); render(); } }, 60000);
-  $('fDate').dataset.day = todayISO();
+  // change de jour automatiquement (à 5 h) si la page reste ouverte
+  let shownDay = intakeDay();
+  setInterval(() => { const d = intakeDay(); if (d !== shownDay){ shownDay = d; ui.selected = d; ui.month = null; render(); } }, 30000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden){ const d = intakeDay(); if (d !== shownDay){ shownDay = d; ui.selected = d; ui.month = null; } render(); } });
 })();
 </script>
 </body>
